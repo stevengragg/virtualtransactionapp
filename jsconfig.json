@@ -1,0 +1,61 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "allowJs": true,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "/*": [
+        "./*"
+      ],
+      "meteor/mongo": [
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/local_collection_driver.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/collection.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/connection_options.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/doc_fetcher.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/mongo_driver.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/mongo_utils.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/observe_multiplex.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/oplog_observe_driver.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/oplog_tailing.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/oplog_v2_converter.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/polling_observe_driver.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/mongo/1.16.4/web.browser/remote_collection_driver.js"
+      ],
+      "meteor/reactive-var": [
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/reactive-var/1.0.12/web.browser/reactive-var.js"
+      ],
+      "meteor/es5-shim": [
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/es5-shim/4.8.0/web.browser/client.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/es5-shim/4.8.0/web.browser/console.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/es5-shim/4.8.0/web.browser/cordova.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/es5-shim/4.8.0/web.browser/export_globals.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/es5-shim/4.8.0/web.browser/import_globals.js"
+      ],
+      "meteor/ecmascript": [
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/ecmascript/0.16.5/web.browser/ecmascript.js"
+      ],
+      "meteor/shell-server": [
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/shell-server/0.5.0/web.browser/main.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/shell-server/0.5.0/web.browser/shell-server.js"
+      ],
+      "meteor/hot-module-replacement": [
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/hot-module-replacement/0.5.2/web.browser/hot-api.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/hot-module-replacement/0.5.2/web.browser/client.js",
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/hot-module-replacement/0.5.2/web.browser/server.js"
+      ],
+      "meteor/react-meteor-data": [
+        "C:\\Users\\Steven Ryzen 5\\AppData\\Local/.meteor/packages/react-meteor-data/2.6.2/web.browser/index.js"
+      ]
+    }
+  },
+  "typeAcquisition": {
+    "include": [
+      "meteor"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    ".meteor"
+  ]
+}
