@@ -1,6 +1,11 @@
 {
   "name": "virtualtransactionapp",
   "private": true,
+  "description": "Virtual Transaction App for allowing students to request documents to the school and provide requirements in return. School admins can validate those requests.",
+  "author": {
+    "name": "Katherine Gragg",
+    "email": "katherinegragg05@gmail.com"
+  },
   "scripts": {
     "start": "meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha",
