@@ -7,6 +7,7 @@
     "email": "katherinegragg05@gmail.com"
   },
   "scripts": {
+    "dev": "meteor --settings settings-dev.json",
     "start": "meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
@@ -15,6 +16,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "autoprefixer": "^10.4.4",
+    "lodash": "^4.17.21",
     "meteor-node-stubs": "^1.2.1",
     "postcss": "^8.4.12",
     "postcss-load-config": "^3.1.4",
@@ -28,5 +30,8 @@
       "server": "server/main.js"
     },
     "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1"
   }
 }
