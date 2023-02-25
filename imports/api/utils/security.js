@@ -128,9 +128,9 @@ export const seedSuperAdmin = () =>
   });
 
 export const executeInitPermissionsAndRoles = () => {
-  Roles.createRole(ROLE_SUPER_ADMIN);
-  Roles.createRole(ROLE_MOBILE_APP_USER);
-  Roles.createRole(ROLE_ALUMNI);
-  Roles.createRole(ROLE_STUDENT);
-  Roles.createRole(ROLE_EVALUATOR);
+  Roles.createRole(ROLE_SUPER_ADMIN, { unlessExists: true });
+  Roles.createRole(ROLE_MOBILE_APP_USER, { unlessExists: true });
+  Roles.createRole(ROLE_ALUMNI, { unlessExists: true });
+  Roles.createRole(ROLE_STUDENT, { unlessExists: true });
+  Roles.createRole(ROLE_EVALUATOR, { unlessExists: true });
 };

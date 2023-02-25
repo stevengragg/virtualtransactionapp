@@ -21,18 +21,20 @@ Meteor.startup(() => {
   try {
     log("============= VTA Server Startup SUCCESS [🔰] =============");
     // log("VTA APP Env: here ", { Production: vta.PRODUCTION, Staging: vta.STAGING });
-
+    const findAdmin = Accounts.findUserByEmail(SEED_SUPER_ADMIN_EMAIL);
     log("🌲🌴🌳 VTA environment: config check", {
       VTAProduction: vta.PRODUCTION,
       VTAStaging: vta.STAGING,
       VTASEED: vta.SEED,
+      VTAInitPermissions: vta.INIT_PERM_ROLES,
       MeteorPROD: Meteor.isProduction,
       MeteorAPPTEST: Meteor.isAppTest,
       MeteorDEV: Meteor.isDevelopment,
       MeteorMOBILE: Meteor.isCordova,
+      AdminInit: !!findAdmin,
     });
 
-    if (!Accounts.findUserByEmail(SEED_SUPER_ADMIN_EMAIL) && vta.SEED) {
+    if (!findAdmin && vta.SEED) {
       log("VTA Super Admin Seeding for the first time 🚀 ...");
       seedSuperAdmin();
     }
