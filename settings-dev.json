@@ -2,7 +2,9 @@
     "public": {
         "vta": {
             "product": "virtualtransactionapp",
-            "process": "main"
+            "process": "main",
+            "production": false,
+            "staging": true
         }
     },
     "MONGO_URL": "mongodb+srv://UCCcapstonedev001:5PXqn04ayzsWEajD@vtaappdb.psxzsv1.mongodb.net/vtaappdb?retryWrites=true&w=majority",
@@ -10,7 +12,11 @@
         "clientId": "753220872761-tdaslmqg1pknp98gbfe2v6jlff74mk0u.apps.googleusercontent.com",
         "clientSecret": "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"
     },
-    "devConfig": {
-        "isSeed": false
-    }
+    "config": {
+        "isSeed": true,
+        "isInitializeRolesAndPermissions": true
+    },
+    "super_admins": [
+        ""
+    ]
 }
