@@ -1,11 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+
+// Pages
 import AuthProvider from "./auth/AuthProvider.jsx";
 import PublicLayout from "./components/layout/PublicLayout.jsx";
-import { Hello } from "./Hello.jsx";
 import { useAccount } from "./hooks/useAccounts.js";
-import { Info } from "./Info.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
 import FullLoading from "./svg/FullLoading.jsx";
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
         <Route element={<PublicLayout />}>
           <Route index element={<LandingPage />} />
         </Route>
+
+        {/* Not Found */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>
   );

@@ -5,8 +5,7 @@ import Header from "../shared/public/Header";
 
 function PublicLayout() {
   return (
-    <div className="max-w-3xl min-h-screen mx-auto sm:pt-10">
-      PublicLayout
+    <div className="leading-normal tracking-normal text-white gradient">
       <Header />
       <Outlet />
       <Footer />
