@@ -12,7 +12,6 @@ import vta from "/imports/both/vta";
 // utils
 import { log, error } from "/imports/both/logger";
 import {
-  executeInitPermissionsAndRoles,
   seedSuperAdmin,
   SEED_SUPER_ADMIN_EMAIL,
 } from "/imports/api/utils/security";
@@ -41,7 +40,7 @@ Meteor.startup(() => {
 
     if (vta.INIT_PERM_ROLES) {
       log("VTA Initializing permissions and roles for the first time ✅ ...");
-      executeInitPermissionsAndRoles();
+      // executeInitPermissionsAndRoles();
     }
   } catch (err) {
     error("============= VTA Server Startup FAILED [❌] =============");

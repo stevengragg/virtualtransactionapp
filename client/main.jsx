@@ -1,8 +1,17 @@
 import React from "react";
-import { Meteor } from "meteor/meteor";
 import { render } from "react-dom";
-import { App } from "/imports/ui/App";
+import { BrowserRouter as UCCVTABrowserRouter } from "react-router-dom";
+import App from "/imports/ui/App";
+
+import "./main.css";
 
 Meteor.startup(() => {
-  render(<App />, document.getElementById("uccvta-root"));
+  render(
+    <React.StrictMode>
+      <UCCVTABrowserRouter>
+        <App />
+      </UCCVTABrowserRouter>
+    </React.StrictMode>,
+    document.getElementById("uccvta-root")
+  );
 });
