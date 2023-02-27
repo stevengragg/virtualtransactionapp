@@ -45,20 +45,23 @@ Meteor.startup(async () => {
       log("VTA Initializing permissions and roles for the first time ✅ ...");
       // executeInitPermissionsAndRoles();
     }
+
+    // Google
+    await ServiceConfiguration.configurations.upsertAsync(
+      { service: "google" },
+      {
+        $set: {
+          loginStyle: "popup",
+          clientId:
+            process.env.GOOGLE_CLIENT_ID || Meteor.settings.google.clientId, // insert your clientId here
+          secret:
+            process.env.GOOGLE_CLIENT_SECRET ||
+            Meteor.settings.google.clientSecret, // insert your secret here
+        },
+      }
+    );
   } catch (err) {
     error("============= VTA Server Startup FAILED [❌] =============");
     error(err);
   }
 });
-
-ServiceConfiguration.configurations.upsertAsync(
-  { service: "google" },
-  {
-    $set: {
-      loginStyle: "popup",
-      clientId: process.env.GOOGLE_CLIENT_ID || Meteor.settings.google.clientId, // insert your clientId here
-      secret:
-        process.env.GOOGLE_CLIENT_SECRET || Meteor.settings.google.clientSecret, // insert your secret here
-    },
-  }
-);

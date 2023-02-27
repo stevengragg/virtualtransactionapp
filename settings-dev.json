@@ -9,8 +9,8 @@
     },
     "MONGO_URL": "mongodb+srv://UCCcapstonedev001:5PXqn04ayzsWEajD@vtaappdb.psxzsv1.mongodb.net/vtaappdb?retryWrites=true&w=majority",
     "google": {
-        "clientId": "753220872761-tdaslmqg1pknp98gbfe2v6jlff74mk0u.apps.googleusercontent.com",
-        "clientSecret": "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"
+        "clientId": "904830233844-tj8hkbncqmq90int8c65i9brjbdmf1gh.apps.googleusercontent.com",
+        "clientSecret": "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"
     },
     "config": {
         "isSeed": true,
