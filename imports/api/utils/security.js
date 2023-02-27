@@ -1,6 +1,12 @@
 // @ts-nocheck
 import { Meteor } from "meteor/meteor";
 import _ from "lodash";
+import {
+  PERMISSION_ALLOW_ALL,
+  ROLE_MOBILE_APP_USER,
+  ROLE_SUPER_ADMIN,
+} from "/imports/both/constants";
+import { log } from "/imports/both/logger";
 
 // TODO: Helper to check if is Super Admin
 
@@ -19,10 +25,10 @@ export const SEED_SUPER_ADMIN_EMAIL = "superadmin@uccvta.com";
 export const SEED_SUPER_ADMIN_PASSWORD = "uccvta2023A!";
 export const SEED_SUPER_ADMIN_FIRSTNAME = "John";
 export const SEED_SUPER_ADMIN_LASTNAME = "Cruz";
-export const SEED_SUPER_ADMIN_USERNAME = "superadmin2023";
+export const SEED_SUPER_ADMIN_USERNAME = "UCCVTASUPERADMIN";
 
-export const seedSuperAdmin = () =>
-  Accounts.createUser({
+export const seedSuperAdmin = async () => {
+  const adminUser = Accounts.createUser({
     email: SEED_SUPER_ADMIN_EMAIL,
     password: SEED_SUPER_ADMIN_PASSWORD,
     profile: {
@@ -32,10 +38,18 @@ export const seedSuperAdmin = () =>
     username: SEED_SUPER_ADMIN_USERNAME,
   });
 
-// export const executeInitPermissionsAndRoles = () => {
-//   Roles.createRole(ROLE_SUPER_ADMIN, { unlessExists: true });
-//   Roles.createRole(ROLE_MOBILE_APP_USER, { unlessExists: true });
-//   Roles.createRole(ROLE_ALUMNI, { unlessExists: true });
-//   Roles.createRole(ROLE_STUDENT, { unlessExists: true });
-//   Roles.createRole(ROLE_EVALUATOR, { unlessExists: true });
-// };
+  log("seedSuperAdmin: admin user ", adminUser);
+
+  if (adminUser) {
+    const attachAdminRole = await Meteor.users.updateAsync(
+      { _id: adminUser },
+      {
+        $set: {
+          roles: [ROLE_SUPER_ADMIN, ROLE_MOBILE_APP_USER],
+          permissions: [PERMISSION_ALLOW_ALL],
+        },
+      }
+    );
+    log("seedSuperAdmin: role attached", attachAdminRole);
+  }
+};

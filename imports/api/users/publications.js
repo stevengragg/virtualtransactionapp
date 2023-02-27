@@ -1,11 +1,14 @@
 // @ts-nocheck
 import { Meteor } from "meteor/meteor";
 
+// Current User
 Meteor.publish("user.currentUser", function () {
   const userId = this.userId;
   if (!userId) return this.ready();
   return Meteor.users.find({ _id: userId });
 });
+
+//
 
 // ROLES
 // Meteor.publish(null, function () {

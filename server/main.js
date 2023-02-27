@@ -15,8 +15,11 @@ import {
   seedSuperAdmin,
   SEED_SUPER_ADMIN_EMAIL,
 } from "/imports/api/utils/security";
+import initOnCreateUser from "/imports/api/init/onCreateUser";
 
-Meteor.startup(() => {
+initOnCreateUser();
+
+Meteor.startup(async () => {
   try {
     log("============= VTA Server Startup SUCCESS [🔰] =============");
     // log("VTA APP Env: here ", { Production: vta.PRODUCTION, Staging: vta.STAGING });
@@ -35,7 +38,7 @@ Meteor.startup(() => {
 
     if (!findAdmin && vta.SEED) {
       log("VTA Super Admin Seeding for the first time 🚀 ...");
-      seedSuperAdmin();
+      await seedSuperAdmin();
     }
 
     if (vta.INIT_PERM_ROLES) {
