@@ -11,7 +11,7 @@ function Header() {
   return (
     <nav
       id="header"
-      className="fixed w-full z-30 top-0 text-white bg-orange-300"
+      className="sticky w-full z-30 top-0 text-white bg-orange-300"
     >
       <div className="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2 font-bold text-sm lg:text-xl">
         <div className="pl-4 flex items-center ">
@@ -48,10 +48,10 @@ function Header() {
         >
           <ul class="list-reset lg:flex justify-end flex-1 items-center">
             <li class="mr-3">
-              <PublicNavigationLink path="#hero" title="Home" />
+              <PublicNavigationLink path="/#hero" title="Home" />
             </li>
             <li class="mr-3">
-              <PublicNavigationLink path="#guide" title="Guide" />
+              <PublicNavigationLink path="/#guide" title="Guide" />
             </li>
           </ul>
           <div className="flex flex-wrap items-center space-x-2">
@@ -74,10 +74,20 @@ function Header() {
           <div className="w-full flex-grow lg:items-center lg:w-auto block lg:hidden mt-2 lg:mt-0 bg-transparent text-black p-4 lg:p-0 z-20">
             <ul className="list-reset justify-end flex-1 items-center">
               <li className="mr-3">
-                <PublicNavigationLink path="#hero" title="Home" />
+                <PublicNavigationLink
+                  path="/#hero"
+                  title="Home"
+                  navBarOpen={navBarOpen}
+                  setNavBarOpen={setNavBarOpen}
+                />
               </li>
               <li className="mr-3">
-                <PublicNavigationLink path="#guide" title="Guide" />
+                <PublicNavigationLink
+                  path="/#guide"
+                  title="Guide"
+                  navBarOpen={navBarOpen}
+                  setNavBarOpen={setNavBarOpen}
+                />
               </li>
             </ul>
             <div className="flex justify-between items-center">
@@ -85,11 +95,15 @@ function Header() {
                 title="Login"
                 extraClassNames="bg-green-500 text-white"
                 path="login"
+                navBarOpen={navBarOpen}
+                setNavBarOpen={setNavBarOpen}
               />
               <PublicNavigationButton
                 title="Register"
                 extraClassNames="bg-red-500 text-gray-300"
                 path="register"
+                navBarOpen={navBarOpen}
+                setNavBarOpen={setNavBarOpen}
               />
             </div>
           </div>

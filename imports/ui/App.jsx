@@ -6,7 +6,9 @@ import AuthProvider from "./auth/AuthProvider.jsx";
 import PublicLayout from "./components/layout/PublicLayout.jsx";
 import { useAccount } from "./hooks/useAccounts.js";
 import LandingPage from "./pages/LandingPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
+import RegistrationPage from "./pages/RegistrationPage.jsx";
 import FullLoading from "./svg/FullLoading.jsx";
 
 function App() {
@@ -21,6 +23,10 @@ function App() {
         <Route element={<PublicLayout />}>
           <Route index element={<LandingPage />} />
         </Route>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegistrationPage />} />
+
+        {/* Protected Routes */}
 
         {/* Not Found */}
         <Route path="*" element={<NotFoundPage />} />
