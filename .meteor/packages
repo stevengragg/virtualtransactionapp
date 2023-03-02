@@ -24,3 +24,5 @@ service-configuration
 accounts-password
 random
 accounts-google
+alanning:roles
+accounts-base
