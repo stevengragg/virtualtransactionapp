@@ -1,8 +1,18 @@
 import { Meteor } from "meteor/meteor";
+import { Roles } from "meteor/alanning:roles";
+import { Email } from "meteor/email";
 import { check, Match } from "meteor/check";
 import { Random } from "meteor/random";
 import { log, error } from "/imports/both/logger";
-import { extractPermissions, extractRoles } from "../utils/helpers";
+import {
+  extractPermissions,
+  extractRoles,
+  generatePasscode,
+  getAssignedRolePerAccountType,
+  HTMLEmailGenerator,
+  isStrongPassword,
+} from "../utils/helpers";
+import { EMAIL_REGEX } from "/imports/both/constants";
 
 Meteor.users.deny({
   insert: () => true,
@@ -10,8 +20,24 @@ Meteor.users.deny({
   remove: () => true,
 });
 
-export const userFunc = {
-  create: async function (
+export const userCompleteProfileInfo = Meteor.methods({
+  /**
+   * Register user and trigger sending of verification code
+   *
+   * @param {String} studentId
+   * @param {String} email
+   * @param {String} firstName
+   * @param {String} lastName
+   * @param {String} middleName
+   * @param {String} password
+   * @param {String} confirmPassword
+   * @param {String} course
+   * @param {String} accountType
+   * @returns {Boolean}
+   *
+   */
+
+  async "user.create"(
     studentId,
     email,
     firstName,
@@ -23,7 +49,7 @@ export const userFunc = {
     accountType
   ) {
     try {
-      log(`userCreate: started`, {
+      log(`user.create: started`, {
         studentId,
         email,
         firstName,
@@ -34,7 +60,7 @@ export const userFunc = {
         course,
         accountType,
       });
-      // Make sure that user can only access userCreate when they are not logged in
+      // Make sure that user can only access user.create when they are not logged in
       const currentUserId = this.userId;
       if (currentUserId)
         throw new Meteor.Error(
@@ -54,11 +80,48 @@ export const userFunc = {
 
       // TODO: Provide more intense validation here
 
+      let errorArray = [];
       // Perform additional custom validation if needed
+
+      if (
+        !studentId ||
+        !email ||
+        !firstName ||
+        !lastName ||
+        !password ||
+        !confirmPassword ||
+        !course ||
+        !accountType
+      ) {
+        errorArray.push("Please provide all required fields.");
+      }
+
+      if (email && !email.match(EMAIL_REGEX)) {
+        errorArray.push("Please provide a valid email address.");
+      }
+
       if (password !== confirmPassword) {
-        throw new Meteor.Error(
-          "password-mismatch",
+        errorArray.push(
           "The password and confirm password fields do not match"
+        );
+      }
+
+      if (!isStrongPassword(password)) {
+        errorArray.push(
+          "Please create a strong password that matches the system criteria."
+        );
+      }
+
+      if (!["alumni", "student"].includes(accountType || "none-of-the-above")) {
+        errorArray.push(
+          "Please select allowed account type (Alumni, Student)."
+        );
+      }
+
+      if (errorArray.length) {
+        throw new Meteor.Error(
+          "input-validations",
+          `See Errors: ${errorArray}`
         );
       }
 
@@ -79,46 +142,126 @@ export const userFunc = {
 
       // Attempt to create the new user using the Accounts package
       const userId = await Accounts.createUserAsync(newUser);
-      if (!userId)
+      if (!userId) {
         throw new Meteor.Error(
           "create-user-failed",
           "Failed to register. Please try again."
         );
-      log(`userCreate: user created with ID ${userId}`);
+      }
+      log(`user.create: user created with ID ${userId}`);
+      // Assign roles
+      if (Meteor.roleAssignment.find({ "user._id": userId }).count() === 0) {
+        // Need _id of existing user record so this call must come after `Accounts.createUser`.
+        const assignedRole = Roles.addUsersToRoles(
+          userId,
+          getAssignedRolePerAccountType(accountType)
+        );
+        log("user.create: roles was assigned", { assignedRole });
+      }
+
+      Meteor.callAsync("user.sendVerificationCode", userId);
     } catch (err) {
-      error("userCreate: internal server error", {
+      error("user.create: internal server error", {
         err,
       });
       throw new Meteor.Error(err?.error, err?.reason);
     }
   },
 
-  sendVerificationCode: async function () {},
+  /**
+   * Get all current attached roles to the user
+   *
+   * @returns {[String]}
+   */
+  async "user.getCurrentRoles"() {
+    try {
+      const currentUserId = this.userId;
+      if (!currentUserId) {
+        throw new Meteor.Error(
+          "Not Authorized",
+          "Not authorized to do such actions."
+        );
+      }
+      return Roles.getRolesForUser(currentUserId);
+    } catch (error) {
+      error("user.getCurrentRoles: internal server error", {
+        err,
+      });
+      throw new Meteor.Error(err?.error, err?.reason);
+    }
+  },
 
-  verifyAccountUsingVerificationCode: async function () {},
+  /**
+   * Using the userId on the onCreateUser Account hook, send verification code
+   * and attach the expected verification code to the user
+   *
+   * @param {String} userId
+   * @returns {Boolean}
+   */
 
-  updateProfileInfo: async function (
-    studentId,
-    firstName,
-    lastName,
-    middleName,
-    course,
-    accountType
-  ) {},
+  async "user.sendVerificationCode"(userId) {
+    try {
+      if (!userId) {
+        throw new Meteor.Error(
+          "Not Authorized",
+          "Not authorized to do such actions."
+        );
+      }
 
-  updateAccountInfo: async function (
-    isChangeEmailOnly,
-    email,
-    password,
-    confirmPassword
-  ) {},
-};
+      const foundUser = await Meteor.users.findOneAsync({ _id: userId });
+      console.log(foundUser);
+      if (!foundUser) {
+        throw new Meteor.Error("user-not-found", "Unable to find the user.");
+      }
+      const oneTimePasscode = generatePasscode();
+      const verificationCodeSet = await Meteor.users.updateAsync(
+        { _id: userId },
+        {
+          $set: {
+            "profile.verificationCode": oneTimePasscode,
+          },
+        }
+      );
+      log(
+        "user.sendVerificationCode: attempted to set and send the one time passcode to verify account ",
+        { verificationCodeSet }
+      );
 
-export const userCompleteProfileInfo = Meteor.methods({
-  "user.create": userFunc.create,
-  "user.sendVerificationCode": userFunc.sendVerificationCode,
-  "user.verifyAccountUsingVerificationCode":
-    userFunc.verifyAccountUsingVerificationCode,
-  "user.updateProfileInfo": userFunc.updateProfileInfo,
-  "user.updateAccount": userFunc.updateAccountInfo,
+      // Let other method calls from the same client start running, without
+      // waiting for the email sending to complete.
+      this.unblock();
+
+      if (verificationCodeSet) {
+        const emailSent = await Email.sendAsync({
+          replyTo: Meteor.settings.senderEmailNoReply,
+          from:
+            Meteor.settings.senderEmail ||
+            "Virtual Transaction Assistance | UCC Congress <registrar@uccvta.app>",
+          to: foundUser?.emails[0].address,
+          subject: "Verify your account",
+          html: HTMLEmailGenerator(
+            "Virtual Transaction Assistance | UCC Congress",
+            `<p>Please verify your account using the code below. Do not share this code to anyone.</p><br><div>Verification Code: <span><b>${oneTimePasscode}</b></span></div><br><br><small>Do not reply to this email.</small>`
+          ),
+        });
+        log("user.sendVerificationCode: attempted to send email", {
+          emailSent,
+        });
+        if (!emailSent) return false;
+      }
+
+      return true;
+    } catch (err) {
+      error("user.sendVerificationCode: internal server error", {
+        err,
+      });
+      return false;
+    }
+  },
+
+  async "user.verifyAccountUsingVerificationCode"() {},
+
+  async "user.updateProfileInfo"() {},
+
+  async "user.updateAccount"() {},
 });

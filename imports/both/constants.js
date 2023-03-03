@@ -1,6 +1,7 @@
 // roles
 export const ROLE_SUPER_ADMIN = "app_super_admin";
 export const ROLE_MOBILE_APP_USER = "app_mobile_app_user"; // optional
+export const ROLE_WEB_APP_USER = "app_web_app_user"; // optional
 export const ROLE_ALUMNI = "app_alumni";
 export const ROLE_STUDENT = "app_student";
 export const ROLE_EVALUATOR = "app_evaluator";
@@ -94,3 +95,6 @@ export const PERMISSION_ALLOW_EVALUATE_COURSE_CPE =
   "perm_allow_evaluate_course_CPE";
 export const PERMISSION_ALLOW_EVALUATE_COURSE_CPED =
   "perm_allow_evaluate_course_CPED";
+
+export const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

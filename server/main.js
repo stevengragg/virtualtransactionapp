@@ -1,5 +1,4 @@
 import { Meteor } from "meteor/meteor";
-import { ServiceConfiguration } from "meteor/service-configuration";
 import { Accounts } from "meteor/accounts-base";
 
 // api-only
@@ -15,15 +14,20 @@ import {
   seedSuperAdmin,
   SEED_SUPER_ADMIN_EMAIL,
 } from "/imports/api/utils/security";
-import initOnCreateUser from "/imports/api/init/onCreateUser";
+import {
+  initOnCreateUser,
+  initPermissionsAndRoles,
+} from "../imports/api/init/initForUserAndAuth";
+import { initGoogleServiceConfig } from "/imports/api/init/initServiceConfig";
 
+// Accounts on Create User hook
 initOnCreateUser();
 
 Meteor.startup(async () => {
   try {
     log("============= VTA Server Startup SUCCESS [🔰] =============");
     // log("VTA APP Env: here ", { Production: vta.PRODUCTION, Staging: vta.STAGING });
-    const findAdmin = Accounts.findUserByEmail(SEED_SUPER_ADMIN_EMAIL);
+    // const findAdmin = Accounts.findUserByEmail(SEED_SUPER_ADMIN_EMAIL);
     log("🌲🌴🌳 VTA environment: config check", {
       VTAProduction: vta.PRODUCTION,
       VTAStaging: vta.STAGING,
@@ -33,33 +37,21 @@ Meteor.startup(async () => {
       MeteorAPPTEST: Meteor.isAppTest,
       MeteorDEV: Meteor.isDevelopment,
       MeteorMOBILE: Meteor.isCordova,
-      AdminInit: !!findAdmin,
+      // AdminInit: !!findAdmin,
     });
 
-    if (!findAdmin && vta.SEED) {
-      log("VTA Super Admin Seeding for the first time 🚀 ...");
-      await seedSuperAdmin();
-    }
+    // if (!findAdmin && vta.SEED) {
+    //   log("VTA Super Admin Seeding for the first time 🚀 ...");
+    //   await seedSuperAdmin();
+    // }
 
     if (vta.INIT_PERM_ROLES) {
       log("VTA Initializing permissions and roles for the first time ✅ ...");
-      // executeInitPermissionsAndRoles();
+      initPermissionsAndRoles();
     }
 
     // Google
-    await ServiceConfiguration.configurations.upsertAsync(
-      { service: "google" },
-      {
-        $set: {
-          loginStyle: "popup",
-          clientId:
-            process.env.GOOGLE_CLIENT_ID || Meteor.settings.google.clientId, // insert your clientId here
-          secret:
-            process.env.GOOGLE_CLIENT_SECRET ||
-            Meteor.settings.google.clientSecret, // insert your secret here
-        },
-      }
-    );
+    initGoogleServiceConfig();
   } catch (err) {
     error("============= VTA Server Startup FAILED [❌] =============");
     error(err);

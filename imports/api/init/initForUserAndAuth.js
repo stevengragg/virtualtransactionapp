@@ -1,5 +1,14 @@
+import { Meteor } from "meteor/meteor";
+import { Roles } from "meteor/alanning:roles";
 import { Accounts } from "meteor/accounts-base";
 import { log } from "/imports/both/logger";
+import {
+  ROLE_ALUMNI,
+  ROLE_MOBILE_APP_USER,
+  ROLE_STUDENT,
+  ROLE_WEB_APP_USER,
+} from "/imports/both/constants";
+
 function initOnCreateUser() {
   Accounts.onCreateUser((options, user) => {
     log("account on create user: started", { options, user });
@@ -42,4 +51,12 @@ function initOnCreateUser() {
   });
 }
 
-export default initOnCreateUser;
+function initPermissionsAndRoles() {
+  // Permissions
+  Roles.createRole(ROLE_ALUMNI, { unlessExists: true });
+  Roles.createRole(ROLE_STUDENT, { unlessExists: true });
+  Roles.createRole(ROLE_MOBILE_APP_USER, { unlessExists: true });
+  Roles.createRole(ROLE_WEB_APP_USER, { unlessExists: true });
+}
+
+export { initOnCreateUser, initPermissionsAndRoles };
