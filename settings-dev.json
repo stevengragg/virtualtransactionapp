@@ -7,15 +7,15 @@
             "staging": true
         }
     },
-    "MAIL_URL": "smtp://registrar@uccvta.app:othxuofwsvpuvqge@smtp.gmail.com:587",
-    "MONGO_URL": "mongodb+srv://UCCcapstonedev001:5PXqn04ayzsWEajD@vtaappdb.psxzsv1.mongodb.net/vtaappdb?retryWrites=true&w=majority",
+    "MAIL_URL": "*****",
+    "MONGO_URL": "*****",
     "google": {
-        "clientId": "284176194268-opvrh2htrhdujs03597tmin74tk15h6f.apps.googleusercontent.com",
-        "clientSecret": "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"
+        "clientId": "*****",
+        "clientSecret": "*****"
     },
-    "vtaEmail": "registrar@uccvta.app",
-    "senderEmail": "UCC VTA <registrar@uccvta.app>",
-    "senderEmailNoReply": "no-reply@uccvta.app",
+    "vtaEmail": "*****",
+    "senderEmail": "*****",
+    "senderEmailNoReply": "*****",
     "config": {
         "isSeed": true,
         "isInitializeRolesAndPermissions": true

@@ -2,5 +2,8 @@ node_modules/
 jsconfig.json
 .vscode
 
+run_vta.sh
+settings.json
+
 
 notes.md
