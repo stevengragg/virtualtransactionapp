@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 // Pages
 import AuthProvider from "./auth/AuthProvider.jsx";
+import AuthLayout from "./components/layout/AuthLayout.jsx";
 import PublicLayout from "./components/layout/PublicLayout.jsx";
 import { useAccount } from "./hooks/useAccounts.js";
 import LandingPage from "./pages/LandingPage.jsx";
@@ -23,9 +24,10 @@ function App() {
         <Route element={<PublicLayout />}>
           <Route index element={<LandingPage />} />
         </Route>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegistrationPage />} />
-
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegistrationPage />} />
+        </Route>
         {/* Protected Routes */}
 
         {/* Not Found */}

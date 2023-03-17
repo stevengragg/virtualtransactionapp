@@ -1,0 +1,9 @@
+*.html
+*.css
+packages
+platforms
+release
+versions
+.id
+.finished-upgraders
+# include on prettier IDE settings app/.prettierignore
