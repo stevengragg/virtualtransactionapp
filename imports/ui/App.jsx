@@ -1,40 +1,11 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-
-// Pages
-import AuthProvider from "./auth/AuthProvider.jsx";
-import AuthLayout from "./components/layout/AuthLayout.jsx";
-import PublicLayout from "./components/layout/PublicLayout.jsx";
 import { useAccount } from "./hooks/useAccounts.js";
-import LandingPage from "./pages/LandingPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
-import NotFoundPage from "./pages/NotFoundPage.jsx";
-import RegistrationPage from "./pages/RegistrationPage.jsx";
-import FullLoading from "./svg/FullLoading.jsx";
+import UnAuthenticatedRoutes from "./routes/UnAuthenticatedRoutes.jsx";
 
 function App() {
-  const account = useAccount();
+  const user = useAccount();
 
-  console.log(account);
-  if (account?.isLoading) return <FullLoading />;
-  return (
-    <AuthProvider>
-      <Routes>
-        {/* Public Routes */}
-        <Route element={<PublicLayout />}>
-          <Route index element={<LandingPage />} />
-        </Route>
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegistrationPage />} />
-        </Route>
-        {/* Protected Routes */}
-
-        {/* Not Found */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </AuthProvider>
-  );
+  return user?.isLoggedIn ? <h1>I am authenticated</h1> : <UnAuthenticatedRoutes />;
 }
 
 export default App;

@@ -1,17 +1,19 @@
 import React from "react";
-import { render } from "react-dom";
-import { BrowserRouter as UCCVTABrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import { Meteor } from "meteor/meteor";
 import App from "/imports/ui/App";
+import AuthProvider from "/imports/ui/auth/AuthProvider";
 
 import "./main.css";
 
+const root = ReactDOM.createRoot(document.getElementById("uccvta-root"));
+
 Meteor.startup(() => {
-  render(
+  root.render(
     <React.StrictMode>
-      <UCCVTABrowserRouter>
+      <AuthProvider>
         <App />
-      </UCCVTABrowserRouter>
+      </AuthProvider>
     </React.StrictMode>,
-    document.getElementById("uccvta-root")
   );
 });
