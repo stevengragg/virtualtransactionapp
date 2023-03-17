@@ -24,20 +24,20 @@ export const userCompleteProfileInfo = Meteor.methods({
   /**
    * Register user and trigger sending of verification code
    *
-   * @param {String} studentId
-   * @param {String} email
-   * @param {String} firstName
-   * @param {String} lastName
-   * @param {String} middleName
-   * @param {String} password
-   * @param {String} confirmPassword
-   * @param {String} course
-   * @param {String} accountType
+   * @param {String} param0.studentId
+   * @param {String} param0.email
+   * @param {String} param0.firstName
+   * @param {String} param0.lastName
+   * @param {String} param0.middleName
+   * @param {String} param0.password
+   * @param {String} param0.confirmPassword
+   * @param {String} param0.course
+   * @param {String} param0.accountType
    * @returns {Boolean}
    *
    */
 
-  async "user.create"(
+  async "user.create"({
     studentId,
     email,
     firstName,
@@ -46,8 +46,8 @@ export const userCompleteProfileInfo = Meteor.methods({
     password,
     confirmPassword,
     course,
-    accountType
-  ) {
+    accountType,
+  }) {
     try {
       log(`user.create: started`, {
         studentId,
@@ -93,7 +93,10 @@ export const userCompleteProfileInfo = Meteor.methods({
         !course ||
         !accountType
       ) {
-        errorArray.push("Please provide all required fields.");
+        throw new Meteor.Error(
+          "input-validations",
+          `See Errors: Please provide all required fields.`
+        );
       }
 
       if (email && !email.match(EMAIL_REGEX)) {
