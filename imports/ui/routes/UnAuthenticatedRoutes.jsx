@@ -19,7 +19,6 @@ function UnAuthenticatedRoutes() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
         </Route>
-        {/* Protected Routes */}
 
         {/* Not Found */}
         <Route path="*" element={<NotFoundPage />} />

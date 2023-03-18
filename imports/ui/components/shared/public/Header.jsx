@@ -2,32 +2,22 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import AppIconSVG from "/imports/ui/svg/AppIconSVG";
-import { HiMenuAlt1 } from "react-icons/hi";
+import { HiMenuAlt1 } from "@react-icons/all-files/hi/HiMenuAlt1";
 import PublicNavigationLink from "../../layout/PublicNavigationLink";
 import PublicNavigationButton from "../../layout/PublicNavigationButton";
 
 function Header() {
   const [navBarOpen, setNavBarOpen] = useState(false);
   return (
-    <nav
-      id="header"
-      className="sticky w-full z-30 top-0 text-white bg-orange-300"
-    >
+    <nav id="header" className="sticky w-full z-30 top-0 text-white bg-orange-300">
       <div className="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2 font-bold text-sm lg:text-xl">
         <div className="pl-4 flex items-center ">
-          <Link
-            className="toggleColour text-white no-underline hover:no-underline flex items-center space-x-4 "
-            to="/"
-          >
+          <Link className="toggleColour text-white no-underline hover:no-underline flex items-center space-x-4 " to="/">
             <span>
               <AppIconSVG width={64} height={64} />
             </span>
             <span>
-              <img
-                src="/imgs/UCCLOGO.png"
-                alt="UCCLogo"
-                className=" object-contain w-1/2"
-              />
+              <img src="/imgs/UCCLOGO.png" alt="UCCLogo" className=" object-contain w-1/2" />
             </span>
           </Link>
           <div className="block lg:hidden pr-4">
@@ -55,16 +45,8 @@ function Header() {
             </li>
           </ul>
           <div className="flex flex-wrap items-center space-x-2">
-            <PublicNavigationButton
-              title="Login"
-              extraClassNames="bg-green-500 text-white"
-              path="login"
-            />
-            <PublicNavigationButton
-              title="Register"
-              extraClassNames="bg-red-500 text-gray-300"
-              path="register"
-            />
+            <PublicNavigationButton title="Login" extraClassNames="bg-green-500 text-white" path="login" />
+            <PublicNavigationButton title="Register" extraClassNames="bg-red-500 text-gray-300" path="register" />
           </div>
         </div>
 

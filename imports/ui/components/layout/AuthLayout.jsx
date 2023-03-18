@@ -9,19 +9,19 @@ function AuthLayout() {
         <div className="container">
           <div className="flex flex-wrap -mx-3">
             <div className="flex-shrink-0 w-full max-w-full mx-auto mb-6 text-center lg:flex-0 lg:w-8/12">
-              <a href="#" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12">
+              <a href="/" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12">
                 {" "}
                 Home{" "}
               </a>
-              <a href="#" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12">
+              <a href="/#guide" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12">
                 {" "}
                 Guide{" "}
               </a>
-              <a href="#" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12">
+              <a href="/register" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12">
                 {" "}
                 Register{" "}
               </a>
-              <a href="#" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12">
+              <a href="/#announcements" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12">
                 {" "}
                 Announcements{" "}
               </a>
