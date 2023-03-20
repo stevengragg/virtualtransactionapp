@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Meteor } from "meteor/meteor";
+import { Random } from "meteor/random";
 import { DDP } from "meteor/ddp";
 import ms from "./vta.js";
 import _ from "lodash";
@@ -25,8 +26,7 @@ const logToServer = (type, p1, p2) => {
   if (p2 && p2.err && p2.err.stack && p2.err.stack.split) {
     object._stack = p2.err.stack.split("\n");
     if (object.err && object.err.response && object.err.response.statusCode) {
-      if (!object.statusCode)
-        object.statusCode = object.err.response.statusCode;
+      if (!object.statusCode) object.statusCode = object.err.response.statusCode;
       object.err = `Request failed with statusCode ${object.err.response.statusCode}`;
     }
 
@@ -40,27 +40,20 @@ const logToServer = (type, p1, p2) => {
   const args = [];
   try {
     if (Meteor.isClient) args.push(p1);
-    else if (type === "error")
-      args.push(typeof p1 === "string" ? p1 : JSON.stringify(p1));
-    else
-      args.push(
-        typeof p1 === "string" ? `\x1b[0;33m${p1}\x1b[0;m` : JSON.stringify(p1)
-      );
+    else if (type === "error") args.push(typeof p1 === "string" ? p1 : JSON.stringify(p1));
+    else args.push(typeof p1 === "string" ? `\x1b[0;33m${p1}\x1b[0;m` : JSON.stringify(p1));
   } catch (e) {
     args.push(p1);
   }
 
   if (Meteor.isServer) {
-    const fibers = require("fibers");
-    fibers.current._id = fibers.current._id || logFibersId++;
-    object._FID = `fid_${fibers.current._id}`;
-    args.push(`_FID${fibers.current._id}`);
+    // Remove support for Fibers
+    let currentId = Random.id(10);
+    object._FID = `fid_${currentId}`;
+    args.push(`_FID_${currentId}`);
 
-    const ddp =
-      DDP._CurrentMethodInvocation.get() ||
-      DDP._CurrentPublicationInvocation.get();
-    if (ddp?.connection?.httpHeaders?.["x-forwarded-for"])
-      object._ip = ddp.connection.httpHeaders["x-forwarded-for"];
+    const ddp = DDP._CurrentMethodInvocation.get() || DDP._CurrentPublicationInvocation.get();
+    if (ddp?.connection?.httpHeaders?.["x-forwarded-for"]) object._ip = ddp.connection.httpHeaders["x-forwarded-for"];
   }
 
   try {
