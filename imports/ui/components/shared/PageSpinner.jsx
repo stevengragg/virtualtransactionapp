@@ -4,12 +4,7 @@ const PageSpinner = () => {
   return (
     <div className="flex h-screen">
       <div className="m-auto">
-        <img
-          src={"/images/spinner.gif"}
-          width={"96"}
-          height={"96"}
-          alt={"Loading..."}
-        />
+        <img src={"/imgs/spinner.svg"} width={"96"} height={"96"} alt={"Loading..."} />
       </div>
     </div>
   );

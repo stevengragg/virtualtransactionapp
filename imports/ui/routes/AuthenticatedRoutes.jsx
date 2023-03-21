@@ -5,12 +5,22 @@ import RequireAuth from "../auth/RequireAuth";
 import PrivateLayout from "../components/layout/PrivateLayout";
 import DashboardPage from "../pages/DashboardPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import VerifyAccountPage from "../pages/VerifyAccountPage";
 
 function AuthenticatedRoutes() {
   return (
     <UCCVTABrowserRouter>
       <Routes>
-        {/* Public Routes */}
+        {/* Private Authenticated Routes */}
+        {/* Verify Account */}
+        <Route
+          path="/v/verify-account"
+          element={
+            <RequireAuth>
+              <VerifyAccountPage />
+            </RequireAuth>
+          }
+        />
         <Route element={<PrivateLayout />}>
           {/* Dashboard */}
           <Route
@@ -22,6 +32,7 @@ function AuthenticatedRoutes() {
             }
           />
         </Route>
+
         {/* Not Found */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -10,10 +10,8 @@ const root = ReactDOM.createRoot(document.getElementById("uccvta-root"));
 
 Meteor.startup(() => {
   root.render(
-    <React.StrictMode>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </React.StrictMode>,
+    <AuthProvider>
+      <App />
+    </AuthProvider>,
   );
 });

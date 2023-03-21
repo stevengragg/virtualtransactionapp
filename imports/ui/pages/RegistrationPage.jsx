@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import LoginWithGoogle from "../components/auth/LoginWithGoogle";
@@ -13,6 +13,7 @@ import { ACCOUNT_TYPE_ALUMNI, ACCOUNT_TYPE_SELECTION, COURSES } from "/imports/b
 import { yearsBack } from "../utils/helper";
 
 function RegistrationPage() {
+  const navigate = useNavigate();
   const [displayRegistrationForm, setDisplayRegistrationForm] = React.useState(false);
   const [acceptedDataPrivacyPol, setAcceptedDataPrivacyPol] = React.useState(false);
   const [showYearGraduated, setShowYearGraduated] = React.useState(false);
@@ -37,7 +38,6 @@ function RegistrationPage() {
 
   const handleInputChange = (event) => {
     const { name, value } = event?.target || event;
-    console.log("handleInputChange", { event });
     setFormData({
       ...formData,
       [name]: value,
@@ -46,12 +46,24 @@ function RegistrationPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData); // You can replace this with your own submit logic
     setLoading(true);
     Meteor.callAsync("user.create", { ...formData })
       .then((response) => {
         console.log(response);
-        setLoading(false);
+
+        // Login user
+        Meteor.loginWithPassword({ username: formData?.studentId }, formData.password, (err) => {
+          setLoading(false);
+          if (err) {
+            // alert(err?.reason);
+            toast.error(err?.reason, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            return;
+          }
+          navigate("/v/dashboard", { replace: true });
+        });
+
         setFormData({
           studentId: "",
           email: "",
