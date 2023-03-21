@@ -1,7 +1,17 @@
 import { Random } from "meteor/random";
 import moment from "moment";
 
-import { PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT, PERMISSION_ALLOW_SEND_REQUEST, ROLE_ALUMNI, ROLE_EVALUATOR, ROLE_MOBILE_APP_USER, ROLE_STUDENT, ROLE_WEB_APP_USER } from "/imports/both/constants";
+import {
+  ACCOUNT_TYPE_ALUMNI,
+  ACCOUNT_TYPE_STUDENT,
+  PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT,
+  PERMISSION_ALLOW_SEND_REQUEST,
+  ROLE_ALUMNI,
+  ROLE_EVALUATOR,
+  ROLE_MOBILE_APP_USER,
+  ROLE_STUDENT,
+  ROLE_WEB_APP_USER,
+} from "/imports/both/constants";
 
 /**
  * Generate predefined _id value to replace the default _id value created by mongo. It is using the collection prefix and random id
@@ -83,10 +93,10 @@ export const isStrongPassword = (password) => {
 
 export const getAssignedRolePerAccountType = (accountType) => {
   switch (accountType) {
-    case "alumni":
+    case ACCOUNT_TYPE_ALUMNI:
       return [ROLE_ALUMNI, ROLE_WEB_APP_USER];
       break;
-    case "student":
+    case ACCOUNT_TYPE_STUDENT:
       return [ROLE_STUDENT, ROLE_WEB_APP_USER];
       break;
     default:

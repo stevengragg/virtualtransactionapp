@@ -9,7 +9,7 @@ import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible
 import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
 import AuthenticationButton from "../components/shared/form/AuthenticationButton";
 import { FormSelectMenu } from "../components/shared/form/FormSelectMenu";
-import { ACCOUNT_TYPE_SELECTION, COURSES } from "/imports/both/constants";
+import { ACCOUNT_TYPE_ALUMNI, ACCOUNT_TYPE_SELECTION, COURSES } from "/imports/both/constants";
 import { yearsBack } from "../utils/helper";
 
 function RegistrationPage() {
@@ -140,6 +140,7 @@ function RegistrationPage() {
                 required
               />
             </div>
+            {formData.password && <p className="text-slate-500 text-xs">Should have at least 1 uppercase, 1 lowercase, a number, and an allowed symbol</p>}
             <div className="text-2xl absolute top-1 right-5 cursor-pointer">
               {!showPassword ? <AiFillEyeInvisible onClick={() => setShowPassword(true)} /> : <AiFillEye onClick={() => setShowPassword(false)} />}
             </div>
@@ -257,23 +258,24 @@ function RegistrationPage() {
             />
           </div>
         </div>
-
         {/* Year Graduated Field */}
-        <div className="">
-          <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
-            Year Graduated <span className="text-red-500">*</span>
-          </label>
-          <div className="mb-1">
-            <FormSelectMenu
-              id="5bb42465-9800-41bf-b760-e448dcba493e"
-              selection={yearsBack(80).reverse()}
-              handleSelection={handleInputChange}
-              name="yearGraduated"
-              placeHolder="Graduation Year"
-              loading={loading}
-            />
+        {formData.accountType === ACCOUNT_TYPE_ALUMNI ? (
+          <div className="">
+            <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+              Year Graduated <span className="text-red-500">*</span>
+            </label>
+            <div className="mb-1">
+              <FormSelectMenu
+                id="5bb42465-9800-41bf-b760-e448dcba493e"
+                selection={yearsBack(80).reverse()}
+                handleSelection={handleInputChange}
+                name="yearGraduated"
+                placeHolder="Graduation Year"
+                loading={loading}
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
 
       <AuthenticationButton disabled={loading} type="submit" btnTitle="Continue" />

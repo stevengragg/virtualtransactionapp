@@ -32,15 +32,12 @@ function Header() {
         </div>
         {/* Not Mobile */}
 
-        <div
-          class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
-          id="nav-content"
-        >
-          <ul class="list-reset lg:flex justify-end flex-1 items-center">
-            <li class="mr-3">
+        <div className="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
+          <ul className="list-reset lg:flex justify-end flex-1 items-center">
+            <li className="mr-3">
               <PublicNavigationLink path="/#hero" title="Home" />
             </li>
-            <li class="mr-3">
+            <li className="mr-3">
               <PublicNavigationLink path="/#guide" title="Guide" />
             </li>
           </ul>
@@ -56,37 +53,15 @@ function Header() {
           <div className="w-full flex-grow lg:items-center lg:w-auto block lg:hidden mt-2 lg:mt-0 bg-transparent text-black p-4 lg:p-0 z-20">
             <ul className="list-reset justify-end flex-1 items-center">
               <li className="mr-3">
-                <PublicNavigationLink
-                  path="/#hero"
-                  title="Home"
-                  navBarOpen={navBarOpen}
-                  setNavBarOpen={setNavBarOpen}
-                />
+                <PublicNavigationLink path="/#hero" title="Home" navBarOpen={navBarOpen} setNavBarOpen={setNavBarOpen} />
               </li>
               <li className="mr-3">
-                <PublicNavigationLink
-                  path="/#guide"
-                  title="Guide"
-                  navBarOpen={navBarOpen}
-                  setNavBarOpen={setNavBarOpen}
-                />
+                <PublicNavigationLink path="/#guide" title="Guide" navBarOpen={navBarOpen} setNavBarOpen={setNavBarOpen} />
               </li>
             </ul>
             <div className="flex justify-between items-center">
-              <PublicNavigationButton
-                title="Login"
-                extraClassNames="bg-green-500 text-white"
-                path="login"
-                navBarOpen={navBarOpen}
-                setNavBarOpen={setNavBarOpen}
-              />
-              <PublicNavigationButton
-                title="Register"
-                extraClassNames="bg-red-500 text-gray-300"
-                path="register"
-                navBarOpen={navBarOpen}
-                setNavBarOpen={setNavBarOpen}
-              />
+              <PublicNavigationButton title="Login" extraClassNames="bg-green-500 text-white" path="login" navBarOpen={navBarOpen} setNavBarOpen={setNavBarOpen} />
+              <PublicNavigationButton title="Register" extraClassNames="bg-red-500 text-gray-300" path="register" navBarOpen={navBarOpen} setNavBarOpen={setNavBarOpen} />
             </div>
           </div>
         ) : null}

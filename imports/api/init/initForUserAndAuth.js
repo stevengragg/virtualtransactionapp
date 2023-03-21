@@ -11,16 +11,11 @@ function initOnCreateUser() {
     const customizedUser = Object.assign(user);
     customizedUser._id = `usr_${Random.id(15)}`;
     // We still want the default hook's 'profile' behavior.
-    // if (options?.profile) {
-    //   customizedUser.profile.f = options?.profile;
+    if (!user?.services?.google && options?.profile) {
+      customizedUser.profile = options?.profile;
 
-    //   log("account on create user: assign profile", { customizedUser });
-    // }
-
-    // if (!user?.services?.google && options?.email) {
-    //   log("account on create user: send verification code", { customizedUser });
-    //   // TODO: Send verification code
-    // }
+      log("account on create user: assign profile", { customizedUser });
+    }
 
     if (user?.services?.google) {
       customizedUser.emails = [];

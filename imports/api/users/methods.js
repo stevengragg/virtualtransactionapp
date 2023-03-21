@@ -5,7 +5,7 @@ import { check, Match } from "meteor/check";
 import { Random } from "meteor/random";
 import { log, error } from "/imports/both/logger";
 import { extractPermissions, extractRoles, generatePasscode, getAssignedRolePerAccountType, HTMLEmailGenerator, isStrongPassword } from "../utils/helpers";
-import { ACCOUNT_TYPE_ALUMNI, EMAIL_REGEX } from "/imports/both/constants";
+import { ACCOUNT_TYPE_ALUMNI, ACCOUNT_TYPE_SELECTION, EMAIL_REGEX } from "/imports/both/constants";
 
 Meteor.users.deny({
   insert: () => true,
@@ -81,7 +81,7 @@ Meteor.methods({
         errorArray.push("Please create a strong password that matches the system criteria.");
       }
 
-      if (!["alumni", "student"].includes(accountType || "none-of-the-above")) {
+      if (!ACCOUNT_TYPE_SELECTION.includes(accountType || "none-of-the-above")) {
         errorArray.push("Please select allowed account type (Alumni, Student).");
       }
 
