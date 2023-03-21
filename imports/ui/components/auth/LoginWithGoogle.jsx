@@ -17,14 +17,14 @@ function LoginWithGoogle({ title }) {
           console.log({ err });
           alert(err?.message);
         } else {
-          navigate("/", { replace: true });
+          navigate("/v/dashboard", { replace: true });
         }
       },
     );
   };
 
   return (
-    <a href="#" className="flex items-center justify-center mt-4 text-white border hover:bg-teal-50" onClick={handleGoogleLogin}>
+    <a href="#" className="rounded-xl flex items-center justify-center mt-4 text-white border-2 hover:bg-teal-50" onClick={handleGoogleLogin}>
       <svg className="h-6 w-6" viewBox="0 0 40 40">
         <path
           d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
@@ -44,7 +44,7 @@ function LoginWithGoogle({ title }) {
         />
       </svg>
 
-      <span className="px-4 py-3 w-5/6 text-center text-slate-400 font-semibold text-base">{title}</span>
+      <span className="px-4 py-3 w-5/6 text-center text-slate-700 font-semibold text-base">{title}</span>
     </a>
   );
 }

@@ -3,6 +3,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible";
 import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
+import LoginWithGoogle from "../components/auth/LoginWithGoogle";
 function LoginPage() {
   let navigate = useNavigate();
 
@@ -25,11 +26,20 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-5/12 xl:w-4/12">
-      <div className="relative flex flex-col min-w-0 mt-32 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
+    <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-5/12 xl:w-4/12 bg-slate-50 rounded-xl border border-orange-300 my-2 md:my-12">
+      <div className="relative flex flex-col min-w-0 mt-2 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
         <div className="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
           <h3 className="relative z-10 font-bold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text">Welcome back</h3>
           <p className="mb-0">Enter your Account/Student ID and password to sign in</p>
+        </div>
+        <div className="flex-auto mt-4 px-6">
+          <LoginWithGoogle title="Sign In with Google" />
+
+          <div className="mt-4 flex items-center justify-between px-2">
+            <span className="border-b w-1/5 lg:w-1/4"></span>
+            <span className=" text-sm text-center text-gray-400 font-medium">or</span>
+            <span className="border-b w-1/5 lg:w-1/4"></span>
+          </div>
         </div>
         <div className="flex-auto p-6">
           <form onSubmit={handleSubmit}>
@@ -38,7 +48,7 @@ function LoginPage() {
               <input
                 type="studentID"
                 className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
-                placeholder="Account/Student ID"
+                placeholder="Enter your Account/Student ID"
                 aria-label="studentID"
                 aria-describedby="studentID-addon"
                 onChange={(e) => setStudentID(e.target.value)}
@@ -51,14 +61,14 @@ function LoginPage() {
                 <input
                   type={!showPassword ? "password" : "text"}
                   className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
-                  placeholder="Password"
+                  placeholder="Enter your Password"
                   aria-label="Password"
                   aria-describedby="password-addon"
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
-              <div className="text-2xl absolute top-1 right-5">
+              <div className="text-2xl absolute top-1 right-5 cursor-pointer">
                 {!showPassword ? <AiFillEyeInvisible onClick={() => setShowPassword(true)} /> : <AiFillEye onClick={() => setShowPassword(false)} />}
               </div>
             </div>
