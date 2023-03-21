@@ -1,4 +1,4 @@
-import moment from "moment";
+// import moment from "moment";
 
 /**
  * Combine all css class string passed in this function
@@ -73,19 +73,19 @@ export const formatThousands = (value) =>
  *
  */
 
-export const greetings = () => {
-  const hour = moment().hour();
+// export const greetings = () => {
+//   const hour = moment().hour();
 
-  if (hour > 16) {
-    return "Good evening";
-  }
+//   if (hour > 16) {
+//     return "Good evening";
+//   }
 
-  if (hour > 11) {
-    return "Good afternoon";
-  }
+//   if (hour > 11) {
+//     return "Good afternoon";
+//   }
 
-  return "Good morning";
-};
+//   return "Good morning";
+// };
 
 export const yearsBack = (back) => {
   const year = new Date().getFullYear();

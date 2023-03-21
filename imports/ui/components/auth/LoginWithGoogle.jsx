@@ -1,6 +1,7 @@
 import React from "react";
 import { Meteor } from "meteor/meteor";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function LoginWithGoogle({ title }) {
   let navigate = useNavigate();
@@ -15,7 +16,9 @@ function LoginWithGoogle({ title }) {
         if (err) {
           // handle error
           console.log({ err });
-          alert(err?.message);
+          toast.error(err?.reason, {
+            position: toast.POSITION.TOP_CENTER,
+          });
         } else {
           navigate("/v/dashboard", { replace: true });
         }

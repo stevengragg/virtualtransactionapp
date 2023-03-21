@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes, BrowserRouter as UCCVTABrowserRouter } from "react-router-dom";
+import RequireAuth from "../auth/RequireAuth";
 
 import PrivateLayout from "../components/layout/PrivateLayout";
 import DashboardPage from "../pages/DashboardPage";
@@ -12,7 +13,14 @@ function AuthenticatedRoutes() {
         {/* Public Routes */}
         <Route element={<PrivateLayout />}>
           {/* Dashboard */}
-          <Route path="/v/dashboard" element={<DashboardPage />} />
+          <Route
+            path="/v/dashboard"
+            element={
+              <RequireAuth>
+                <DashboardPage />
+              </RequireAuth>
+            }
+          />
         </Route>
         {/* Not Found */}
         <Route path="*" element={<NotFoundPage />} />

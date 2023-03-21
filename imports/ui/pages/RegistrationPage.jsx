@@ -7,11 +7,17 @@ import LoginWithGoogle from "../components/auth/LoginWithGoogle";
 
 import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible";
 import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
+import AuthenticationButton from "../components/shared/form/AuthenticationButton";
+import { FormSelectMenu } from "../components/shared/form/FormSelectMenu";
+import { COURSES } from "/imports/both/constants";
 
 function RegistrationPage() {
   const [displayRegistrationForm, setDisplayRegistrationForm] = React.useState(false);
   const [acceptedDataPrivacyPol, setAcceptedDataPrivacyPol] = React.useState(false);
   const [showYearGraduated, setShowYearGraduated] = React.useState(false);
+
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword2, setShowPassword2] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState("");
 
@@ -29,7 +35,8 @@ function RegistrationPage() {
   });
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event?.target || event;
+    console.log("handleInputChange", { event });
     setFormData({
       ...formData,
       [name]: value,
@@ -112,6 +119,59 @@ function RegistrationPage() {
           </div>
         </div>
       </div>
+
+      <div className="mt-1 flex flex-col lg:flex-row space-x-0 lg:space-x-2">
+        {/* Password Field */}
+        <div className="flex-1">
+          <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+            Password <span className="text-red-500">*</span>
+          </label>
+          <div className="mb-4 relative">
+            <div className="w-full">
+              <input
+                type={!showPassword ? "password" : "text"}
+                name="password"
+                className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
+                placeholder="Enter your Password"
+                aria-label="Password"
+                aria-describedby="password-addon"
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="text-2xl absolute top-1 right-5 cursor-pointer">
+              {!showPassword ? <AiFillEyeInvisible onClick={() => setShowPassword(true)} /> : <AiFillEye onClick={() => setShowPassword(false)} />}
+            </div>
+          </div>
+        </div>
+        {/* Confirm Password Field */}
+        <div className="flex-1">
+          <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+            Confirm Password <span className="text-red-500">*</span>
+          </label>
+          <div className="mb-4 relative">
+            <div className="w-full">
+              <input
+                type={!showPassword2 ? "password" : "text"}
+                name="confirmPassword"
+                className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
+                placeholder="Confirm your Password"
+                aria-label="cpassword"
+                aria-describedby="cpassword-addon"
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="text-2xl absolute top-1 right-5 cursor-pointer">
+              {!showPassword2 ? <AiFillEyeInvisible onClick={() => setShowPassword2(true)} /> : <AiFillEye onClick={() => setShowPassword2(false)} />}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-1 my-2">
+        <p className="text-semibold text-sm text-slate-500 leading-1">Personal Information</p>
+      </div>
       {/* First Name Field */}
       <div className="mt-1">
         <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
@@ -122,7 +182,7 @@ function RegistrationPage() {
             type="text"
             name="firstName"
             className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
-            placeholder="XXXXXXXX"
+            placeholder="ex. Juan"
             aria-label="firstName"
             aria-describedby="firstName-addon"
             onChange={handleInputChange}
@@ -141,7 +201,7 @@ function RegistrationPage() {
             type="text"
             name="lastName"
             className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
-            placeholder="XXXXXXXX"
+            placeholder="ex. Dela Cruz"
             aria-label="lastName"
             aria-describedby="lastName-addon"
             onChange={handleInputChange}
@@ -161,7 +221,7 @@ function RegistrationPage() {
             type="text"
             name="middleName"
             className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
-            placeholder="XXXXXXXX"
+            placeholder="ex. Tindugan"
             aria-label="middleName"
             aria-describedby="middleName-addon"
             onChange={handleInputChange}
@@ -170,23 +230,16 @@ function RegistrationPage() {
           />
         </div>
       </div>
+      {/* Course Field */}
+      <div className="mt-1">
+        <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+          Course <span className="text-red-500">*</span>
+        </label>
+        <div className="mb-1">
+          <FormSelectMenu id="e76087d6-4185-4d13-b945-0e07f4dba104" selection={COURSES} handleSelection={handleInputChange} name="course" placeHolder="Select Your Course" loading={loading} />
+        </div>
+      </div>
 
-      <label>
-        Password: *
-        <input type="password" name="password" value={formData.password} onChange={handleInputChange} disabled={loading} />
-      </label>
-      <label>
-        Confirm Password: *
-        <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} disabled={loading} />
-      </label>
-      <label>
-        Course: *
-        <select name="course" value={formData.course} onChange={handleInputChange} disabled={loading}>
-          <option value="">Select a course</option>
-          <option value="Course A">Course A</option>
-          <option value="Course B">Course B</option>
-        </select>
-      </label>
       <label>
         Account Type: *
         <select name="accountType" value={formData.accountType} onChange={handleInputChange} disabled={loading}>
@@ -195,9 +248,7 @@ function RegistrationPage() {
           <option value="alumni">Alumni</option>
         </select>
       </label>
-      <button type="submit" disabled={loading}>
-        Create Account
-      </button>
+      <AuthenticationButton disabled={loading} type="submit" btnTitle="Continue" />
     </form>
   );
 
@@ -217,11 +268,11 @@ function RegistrationPage() {
   return (
     <>
       <ToastContainer />
-      <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-2/5 bg-slate-50 rounded-xl border border-orange-300 my-2 md:my-12">
+      <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-2/5 bg-slate-50 rounded-xl border border-orange-400 my-2 shadow-md shadow-orange-300">
         <div className="relative flex flex-col min-w-0 mt-2 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
           <div className="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl text-left">
             <h3 className="relative z-10 font-bold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text">{displayRegistrationForm ? "Account Creation" : "Data Privacy"}</h3>
-            <p className="mb-0">{displayRegistrationForm ? "Please provide all required information." : "University of Caloocan City"}</p>
+            <p className="mb-0">{displayRegistrationForm ? "Please provide all required information" : "University of Caloocan City"}</p>
           </div>
           {displayRegistrationForm ? (
             <div className="flex-auto mt-4">
@@ -256,14 +307,7 @@ function RegistrationPage() {
                   <div className="flex-none">I agree</div>
                 </div>
                 <div className="text-center">
-                  <button
-                    disabled={!acceptedDataPrivacyPol}
-                    onClick={() => setDisplayRegistrationForm(true)}
-                    type="button"
-                    className="disabled:bg-slate-100 disabled:cursor-not-allowed inline-block w-full px-6 py-3 mt-6 mb-0 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft bg-gradient-to-tl from-orange-600 to-orange-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85"
-                  >
-                    Proceed
-                  </button>
+                  <AuthenticationButton disabled={!acceptedDataPrivacyPol} onClick={() => setDisplayRegistrationForm(true)} type="button" btnTitle="Proceed" />
                 </div>
               </div>
             )}

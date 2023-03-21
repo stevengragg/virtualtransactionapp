@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible";
 import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
 import LoginWithGoogle from "../components/auth/LoginWithGoogle";
+import AuthenticationButton from "../components/shared/form/AuthenticationButton";
 function LoginPage() {
   let navigate = useNavigate();
 
@@ -33,7 +34,7 @@ function LoginPage() {
   return (
     <>
       <ToastContainer />
-      <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-5/12 xl:w-4/12 bg-slate-50 rounded-xl border border-orange-300 my-2 md:my-12">
+      <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-5/12 xl:w-4/12 bg-slate-50 rounded-xl border border-orange-400 my-2 md:my-12 shadow-lg shadow-orange-300">
         <div className="relative flex flex-col min-w-0 mt-2 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
           <div className="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
             <h3 className="relative z-10 font-bold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text">Welcome back</h3>
@@ -58,6 +59,7 @@ function LoginPage() {
                   placeholder="Enter your Account/Student ID"
                   aria-label="studentID"
                   aria-describedby="studentID-addon"
+                  disabled={loading}
                   onChange={(e) => setStudentID(e.target.value)}
                   required
                 />
@@ -72,6 +74,7 @@ function LoginPage() {
                     aria-label="Password"
                     aria-describedby="password-addon"
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={loading}
                     required
                   />
                 </div>
@@ -84,19 +87,14 @@ function LoginPage() {
                   id="rememberMe"
                   className="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left -ml-12 w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
                   type="checkbox"
-                  checked
+                  defaultChecked
                 />
                 <label className="mb-2 ml-1 font-normal cursor-pointer select-none text-sm text-slate-700" htmlFor="rememberMe">
                   Remember me
                 </label>
               </div>
               <div className="text-center">
-                <button
-                  type="submit"
-                  className="inline-block w-full px-6 py-3 mt-6 mb-0 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft bg-gradient-to-tl from-orange-600 to-orange-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85"
-                >
-                  Sign in
-                </button>
+                <AuthenticationButton type="submit" btnTitle={loading ? "Securing Access ..." : "Sign in"} disabled={loading} />
               </div>
             </form>
           </div>
