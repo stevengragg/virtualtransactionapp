@@ -9,7 +9,8 @@ import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible
 import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
 import AuthenticationButton from "../components/shared/form/AuthenticationButton";
 import { FormSelectMenu } from "../components/shared/form/FormSelectMenu";
-import { COURSES } from "/imports/both/constants";
+import { ACCOUNT_TYPE_SELECTION, COURSES } from "/imports/both/constants";
+import { yearsBack } from "../utils/helper";
 
 function RegistrationPage() {
   const [displayRegistrationForm, setDisplayRegistrationForm] = React.useState(false);
@@ -236,18 +237,45 @@ function RegistrationPage() {
           Course <span className="text-red-500">*</span>
         </label>
         <div className="mb-1">
-          <FormSelectMenu id="e76087d6-4185-4d13-b945-0e07f4dba104" selection={COURSES} handleSelection={handleInputChange} name="course" placeHolder="Select Your Course" loading={loading} />
+          <FormSelectMenu id="f8bce823-ae41-4fe7-8029-ef3a08e6835e" selection={COURSES} handleSelection={handleInputChange} name="course" placeHolder="Select Your Course" loading={loading} />
+        </div>
+      </div>
+      <div className="mt-1 flex flex-col lg:flex-row space-x-0 lg:space-x-2">
+        {/* Account Type Field */}
+        <div className="flex-1">
+          <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+            Account Type <span className="text-red-500">*</span>
+          </label>
+          <div className="mb-1">
+            <FormSelectMenu
+              id="787476e0-1480-4b52-9582-5a5e7d03275b"
+              selection={ACCOUNT_TYPE_SELECTION}
+              handleSelection={handleInputChange}
+              name="accountType"
+              placeHolder="Select Account Type"
+              loading={loading}
+            />
+          </div>
+        </div>
+
+        {/* Year Graduated Field */}
+        <div className="">
+          <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+            Year Graduated <span className="text-red-500">*</span>
+          </label>
+          <div className="mb-1">
+            <FormSelectMenu
+              id="5bb42465-9800-41bf-b760-e448dcba493e"
+              selection={yearsBack(80).reverse()}
+              handleSelection={handleInputChange}
+              name="yearGraduated"
+              placeHolder="Graduation Year"
+              loading={loading}
+            />
+          </div>
         </div>
       </div>
 
-      <label>
-        Account Type: *
-        <select name="accountType" value={formData.accountType} onChange={handleInputChange} disabled={loading}>
-          <option value="">Select an account type</option>
-          <option value="student">Student</option>
-          <option value="alumni">Alumni</option>
-        </select>
-      </label>
       <AuthenticationButton disabled={loading} type="submit" btnTitle="Continue" />
     </form>
   );
@@ -269,16 +297,16 @@ function RegistrationPage() {
     <>
       <ToastContainer />
       <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-2/5 bg-slate-50 rounded-xl border border-orange-400 my-2 shadow-md shadow-orange-300">
-        <div className="relative flex flex-col min-w-0 mt-2 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
+        <div className="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
           <div className="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl text-left">
             <h3 className="relative z-10 font-bold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text">{displayRegistrationForm ? "Account Creation" : "Data Privacy"}</h3>
             <p className="mb-0">{displayRegistrationForm ? "Please provide all required information" : "University of Caloocan City"}</p>
           </div>
           {displayRegistrationForm ? (
-            <div className="flex-auto mt-4">
+            <div className="flex-auto mt-1 px-6">
               <LoginWithGoogle title="Sign Up with Google" />
 
-              <div className="mt-4 flex items-center justify-between px-2">
+              <div className="mt-2 flex items-center justify-between px-2">
                 <span className="border-b w-1/5 lg:w-1/4"></span>
                 <span className=" text-sm text-center text-gray-400 font-medium">or</span>
                 <span className="border-b w-1/5 lg:w-1/4"></span>
@@ -288,7 +316,7 @@ function RegistrationPage() {
           <div className="flex-auto p-6">{displayRegistrationForm ? registrationForm : dataPrivacyContentForm}</div>
           <div className="p-6 px-1 pt-0 text-center bg-transparent border-t-0 border-t-solid rounded-b-2xl lg:px-2">
             {displayRegistrationForm ? (
-              <div className="mx-auto mb-6 leading-normal text-sm">
+              <div className="mx-auto mb-1 leading-normal text-sm">
                 Already have an account?
                 <Link to="/login" className="relative z-10 font-semibold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text ml-2">
                   Sign In

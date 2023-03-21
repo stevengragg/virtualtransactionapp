@@ -64,6 +64,8 @@ export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*
 export const ACCOUNT_TYPE_STUDENT = "Student";
 export const ACCOUNT_TYPE_ALUMNI = "Alumni";
 
+export const ACCOUNT_TYPE_SELECTION = [ACCOUNT_TYPE_STUDENT, ACCOUNT_TYPE_ALUMNI];
+
 export const COURSES = [
   "BSAT",
   "BSENTREP",

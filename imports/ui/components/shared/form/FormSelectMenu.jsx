@@ -11,7 +11,7 @@ export const FormSelectMenu = (props) => {
   const [selected, setSelected] = React.useState(props?.defaultSelected || null);
   const handleSelectedItem = (item) => {
     setSelected(item);
-    props?.handleSelection({ name: props?.name, value: item });
+    props?.handleSelection({ name: props?.name, value: item?.toString() });
   };
   return (
     <Listbox value={selected} onChange={handleSelectedItem} disabled={props?.loading} name={props?.name}>
@@ -20,7 +20,7 @@ export const FormSelectMenu = (props) => {
           {/* <Listbox.Label className="block text-sm font-medium text-gray-700">Assigned to</Listbox.Label> */}
           <div className="mt-1 relative">
             <Listbox.Button className="relative w-full bg-white text-sm md:text-base border border-gray-200 pl-1 pr-10 py-2 text-left dark:focus:border-orange-300 focus:shadow-soft-primary-outline focus:ring-opacity-40 rounded-lg  transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow">
-              <span className="flex items-center">
+              <span className="flex items-center w-3/4">
                 <span className="ml-3 block truncate">{selected || props?.placeHolder}</span>
               </span>
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">

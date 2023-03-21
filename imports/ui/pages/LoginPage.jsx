@@ -40,10 +40,10 @@ function LoginPage() {
             <h3 className="relative z-10 font-bold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text">Welcome back</h3>
             <p className="mb-0">Enter your Account/Student ID and password to sign in</p>
           </div>
-          <div className="flex-auto mt-4 px-6">
+          <div className="flex-auto mt-1 px-6">
             <LoginWithGoogle title="Sign In with Google" />
 
-            <div className="mt-4 flex items-center justify-between px-2">
+            <div className="mt-2 flex items-center justify-between px-2">
               <span className="border-b w-1/5 lg:w-1/4"></span>
               <span className=" text-sm text-center text-gray-400 font-medium">or</span>
               <span className="border-b w-1/5 lg:w-1/4"></span>
