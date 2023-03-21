@@ -1,13 +1,17 @@
 import { Meteor } from "meteor/meteor";
 import React from "react";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+
 import LoginWithGoogle from "../components/auth/LoginWithGoogle";
 
-import BannerInfo from "../components/shared/banners/BannerInfo";
+import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible";
+import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
 
 function RegistrationPage() {
   const [displayRegistrationForm, setDisplayRegistrationForm] = React.useState(false);
   const [acceptedDataPrivacyPol, setAcceptedDataPrivacyPol] = React.useState(false);
+  const [showYearGraduated, setShowYearGraduated] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState("");
 
@@ -21,6 +25,7 @@ function RegistrationPage() {
     confirmPassword: "",
     course: "",
     accountType: "",
+    yearGraduated: "",
   });
 
   const handleInputChange = (event) => {
@@ -49,37 +54,123 @@ function RegistrationPage() {
           confirmPassword: "",
           course: "",
           accountType: "",
+          yearGraduated: "",
         });
       })
       .catch((error) => {
         console.error(error?.reason);
         setErrors(error?.reason);
         setLoading(false);
+        toast.error(error?.reason, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
   };
 
   const registrationForm = (
     <form onSubmit={handleSubmit}>
-      <label>
-        Student Id(username): *
-        <input type="text" name="studentId" value={formData.studentId} onChange={handleInputChange} disabled={loading} />
-      </label>
-      <label>
-        Email: *
-        <input type="email" name="email" value={formData.email} onChange={handleInputChange} disabled={loading} />
-      </label>
-      <label>
-        First Name: *
-        <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} disabled={loading} />
-      </label>
-      <label>
-        Last Name: *
-        <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} disabled={loading} />
-      </label>
-      <label>
-        Middle Name:
-        <input type="text" name="middleName" value={formData.middleName} onChange={handleInputChange} disabled={loading} />
-      </label>
+      <div className="px-1">
+        <p className="text-semibold text-sm text-slate-500 leading-1">Account Information</p>
+      </div>
+      <div className="mt-1 flex flex-col lg:flex-row space-x-0 lg:space-x-2">
+        {/* Student ID Field */}
+        <div className="flex-1">
+          <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+            Account/Student ID <span className="text-red-500">*</span>
+          </label>
+          <div className="mb-1">
+            <input
+              type="text"
+              name="studentId"
+              className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
+              placeholder="XXXXXXXX"
+              aria-label="studentId"
+              aria-describedby="studentId-addon"
+              onChange={handleInputChange}
+              disabled={loading}
+              required
+            />
+          </div>
+        </div>
+        {/* Email Address Field */}
+        <div className="flex-1">
+          <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+            Email Address <span className="text-red-500">*</span>
+          </label>
+          <div className="mb-1">
+            <input
+              type="email"
+              name="email"
+              className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
+              placeholder="@"
+              aria-label="email"
+              aria-describedby="email-addon"
+              onChange={handleInputChange}
+              disabled={loading}
+              required
+            />
+          </div>
+        </div>
+      </div>
+      {/* First Name Field */}
+      <div className="mt-1">
+        <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+          First Name <span className="text-red-500">*</span>
+        </label>
+        <div className="mb-1">
+          <input
+            type="text"
+            name="firstName"
+            className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
+            placeholder="XXXXXXXX"
+            aria-label="firstName"
+            aria-describedby="firstName-addon"
+            onChange={handleInputChange}
+            disabled={loading}
+            required
+          />
+        </div>
+      </div>
+      {/* Last Name Field */}
+      <div className="mt-1">
+        <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+          Last Name <span className="text-red-500">*</span>
+        </label>
+        <div className="mb-1">
+          <input
+            type="text"
+            name="lastName"
+            className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
+            placeholder="XXXXXXXX"
+            aria-label="lastName"
+            aria-describedby="lastName-addon"
+            onChange={handleInputChange}
+            disabled={loading}
+            required
+          />
+        </div>
+      </div>
+
+      {/* Middle Name Field */}
+      <div className="mt-1">
+        <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
+          Middle Name <span className="text-slate-500">(optional)</span>
+        </label>
+        <div className="mb-1">
+          <input
+            type="text"
+            name="middleName"
+            className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-orange-300 focus:outline-none focus:transition-shadow"
+            placeholder="XXXXXXXX"
+            aria-label="middleName"
+            aria-describedby="middleName-addon"
+            onChange={handleInputChange}
+            disabled={loading}
+            required
+          />
+        </div>
+      </div>
+
       <label>
         Password: *
         <input type="password" name="password" value={formData.password} onChange={handleInputChange} disabled={loading} />
@@ -124,59 +215,62 @@ function RegistrationPage() {
   );
 
   return (
-    <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-5/12 xl:w-4/12">
-      <div className="relative flex flex-col min-w-0 mt-32 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
-        <div className="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl text-left">
-          <h3 className="relative z-10 font-bold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text">{displayRegistrationForm ? "Account Creation" : "Data Privacy"}</h3>
-          <p className="mb-0">{displayRegistrationForm ? "Please provide all required information." : "University of Caloocan City"}</p>
-        </div>
-        {displayRegistrationForm ? (
-          <div className="flex-auto mt-4">
-            <LoginWithGoogle title="Sign Up with Google" />
-
-            <div className="mt-4 flex items-center justify-between px-2">
-              <span className="border-b w-1/5 lg:w-1/4"></span>
-              <span className=" text-sm text-center text-gray-400 font-medium">or</span>
-              <span className="border-b w-1/5 lg:w-1/4"></span>
-            </div>
+    <>
+      <ToastContainer />
+      <div className="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-2/5 bg-slate-50 rounded-xl border border-orange-300 my-2 md:my-12">
+        <div className="relative flex flex-col min-w-0 mt-2 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
+          <div className="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl text-left">
+            <h3 className="relative z-10 font-bold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text">{displayRegistrationForm ? "Account Creation" : "Data Privacy"}</h3>
+            <p className="mb-0">{displayRegistrationForm ? "Please provide all required information." : "University of Caloocan City"}</p>
           </div>
-        ) : null}
-        <div className="flex-auto p-6">{displayRegistrationForm ? registrationForm : dataPrivacyContentForm}</div>
-        <div className="p-6 px-1 pt-0 text-center bg-transparent border-t-0 border-t-solid rounded-b-2xl lg:px-2">
           {displayRegistrationForm ? (
-            <div className="mx-auto mb-6 leading-normal text-sm">
-              Already have an account?
-              <Link to="/login" className="relative z-10 font-semibold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text ml-2">
-                Sign In
-              </Link>
-            </div>
-          ) : (
-            <div>
-              {" "}
-              <div className="flex flex-wrap items-center space-x-2">
-                <input
-                  onChange={() => setAcceptedDataPrivacyPol(!acceptedDataPrivacyPol)}
-                  name="isAcceptedPrivacyStatement"
-                  type="checkbox"
-                  className="form-check-input appearance-none h-4 w-4 border-2 checked:border-opacity-5  border-gray-300 rounded-sm bg-white checked:bg-green-500 checked:border-blue-600 focus:outline-none focus:ring-green-300 focus:ring transition duration-200 align-top bg-no-repeat bg-center bg-contain cursor-pointer"
-                />
-                <div className="flex-none">I agree</div>
-              </div>
-              <div className="text-center">
-                <button
-                  disabled={!acceptedDataPrivacyPol}
-                  onClick={() => setDisplayRegistrationForm(true)}
-                  type="button"
-                  className="disabled:bg-slate-100 disabled:cursor-not-allowed inline-block w-full px-6 py-3 mt-6 mb-0 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft bg-gradient-to-tl from-orange-600 to-orange-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85"
-                >
-                  Proceed
-                </button>
+            <div className="flex-auto mt-4">
+              <LoginWithGoogle title="Sign Up with Google" />
+
+              <div className="mt-4 flex items-center justify-between px-2">
+                <span className="border-b w-1/5 lg:w-1/4"></span>
+                <span className=" text-sm text-center text-gray-400 font-medium">or</span>
+                <span className="border-b w-1/5 lg:w-1/4"></span>
               </div>
             </div>
-          )}
+          ) : null}
+          <div className="flex-auto p-6">{displayRegistrationForm ? registrationForm : dataPrivacyContentForm}</div>
+          <div className="p-6 px-1 pt-0 text-center bg-transparent border-t-0 border-t-solid rounded-b-2xl lg:px-2">
+            {displayRegistrationForm ? (
+              <div className="mx-auto mb-6 leading-normal text-sm">
+                Already have an account?
+                <Link to="/login" className="relative z-10 font-semibold text-transparent bg-gradient-to-tl from-orange-600 to-orange-400 bg-clip-text ml-2">
+                  Sign In
+                </Link>
+              </div>
+            ) : (
+              <div>
+                {" "}
+                <div className="flex flex-wrap items-center space-x-2">
+                  <input
+                    onChange={() => setAcceptedDataPrivacyPol(!acceptedDataPrivacyPol)}
+                    name="isAcceptedPrivacyStatement"
+                    type="checkbox"
+                    className="form-check-input appearance-none h-4 w-4 border-2 checked:border-opacity-5  border-gray-300 rounded-sm bg-white checked:bg-green-500 checked:border-blue-600 focus:outline-none focus:ring-green-300 focus:ring transition duration-200 align-top bg-no-repeat bg-center bg-contain cursor-pointer"
+                  />
+                  <div className="flex-none">I agree</div>
+                </div>
+                <div className="text-center">
+                  <button
+                    disabled={!acceptedDataPrivacyPol}
+                    onClick={() => setDisplayRegistrationForm(true)}
+                    type="button"
+                    className="disabled:bg-slate-100 disabled:cursor-not-allowed inline-block w-full px-6 py-3 mt-6 mb-0 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft bg-gradient-to-tl from-orange-600 to-orange-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85"
+                  >
+                    Proceed
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

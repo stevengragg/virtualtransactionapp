@@ -1,13 +1,7 @@
 import { Random } from "meteor/random";
-import {
-  PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT,
-  PERMISSION_ALLOW_SEND_REQUEST,
-  ROLE_ALUMNI,
-  ROLE_EVALUATOR,
-  ROLE_MOBILE_APP_USER,
-  ROLE_STUDENT,
-  ROLE_WEB_APP_USER,
-} from "/imports/both/constants";
+import moment from "moment";
+
+import { PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT, PERMISSION_ALLOW_SEND_REQUEST, ROLE_ALUMNI, ROLE_EVALUATOR, ROLE_MOBILE_APP_USER, ROLE_STUDENT, ROLE_WEB_APP_USER } from "/imports/both/constants";
 
 /**
  * Generate predefined _id value to replace the default _id value created by mongo. It is using the collection prefix and random id
@@ -16,8 +10,7 @@ import {
  * @returns {String}
  */
 
-export const idGeneratorHelper = (colPrefix) =>
-  `${colPrefix || "id"}_${Random.id(17)}`;
+export const idGeneratorHelper = (colPrefix) => `${colPrefix || "id"}_${Random.id(17)}`;
 
 export const extractRoles = (accountType) => {
   switch (accountType) {
@@ -40,16 +33,10 @@ export const extractRoles = (accountType) => {
 export const extractPermissions = (accountType) => {
   switch (accountType) {
     case "student":
-      return [
-        PERMISSION_ALLOW_SEND_REQUEST,
-        PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT,
-      ];
+      return [PERMISSION_ALLOW_SEND_REQUEST, PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT];
       break;
     case "alumni":
-      return [
-        PERMISSION_ALLOW_SEND_REQUEST,
-        PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT,
-      ];
+      return [PERMISSION_ALLOW_SEND_REQUEST, PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT];
       break;
     // case "evaluator":
     //   return [PER, PERMISSION_ALLOW_MANAGE_OWN_ACCOUNT];
@@ -75,17 +62,11 @@ export const isStrongPassword = (password) => {
     return false;
   }
 
-  if (
-    !password.match(/[a-z]/g) ||
-    password.match(/[a-z]/g).length < minLowerCase
-  ) {
+  if (!password.match(/[a-z]/g) || password.match(/[a-z]/g).length < minLowerCase) {
     return false;
   }
 
-  if (
-    !password.match(/[A-Z]/g) ||
-    password.match(/[A-Z]/g).length < minUpperCase
-  ) {
+  if (!password.match(/[A-Z]/g) || password.match(/[A-Z]/g).length < minUpperCase) {
     return false;
   }
 

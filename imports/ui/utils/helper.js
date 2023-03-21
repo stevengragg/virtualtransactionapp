@@ -1,3 +1,5 @@
+import moment from "moment";
+
 /**
  * Combine all css class string passed in this function
  *
@@ -83,4 +85,9 @@ export const greetings = () => {
   }
 
   return "Good morning";
+};
+
+export const yearsBack = (back) => {
+  const year = new Date().getFullYear();
+  return Array.from({ length: back }, (v, i) => year - back + i + 1);
 };
