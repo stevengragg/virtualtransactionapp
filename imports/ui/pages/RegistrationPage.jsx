@@ -61,7 +61,7 @@ function RegistrationPage() {
             });
             return;
           }
-          navigate("/v/dashboard", { replace: true });
+          navigate("/dashboard", { replace: true });
         });
 
         setFormData({
@@ -240,7 +240,6 @@ function RegistrationPage() {
             aria-describedby="middleName-addon"
             onChange={handleInputChange}
             disabled={loading}
-            required
           />
         </div>
       </div>

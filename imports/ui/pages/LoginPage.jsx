@@ -27,7 +27,7 @@ function LoginPage() {
         });
         return;
       }
-      navigate("/v/dashboard", { replace: true });
+      navigate("/dashboard", { replace: true });
     });
   };
 

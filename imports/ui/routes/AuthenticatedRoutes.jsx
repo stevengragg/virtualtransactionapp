@@ -24,7 +24,7 @@ function AuthenticatedRoutes() {
         <Route element={<PrivateLayout />}>
           {/* Dashboard */}
           <Route
-            path="/v/dashboard"
+            path="/dashboard"
             element={
               <RequireAuth>
                 <DashboardPage />

@@ -20,7 +20,7 @@ function LoginWithGoogle({ title }) {
             position: toast.POSITION.TOP_CENTER,
           });
         } else {
-          navigate("/v/dashboard", { replace: true });
+          navigate("/dashboard", { replace: true });
         }
       },
     );
