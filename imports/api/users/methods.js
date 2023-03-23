@@ -6,6 +6,7 @@ import { Random } from "meteor/random";
 import { log, error } from "/imports/both/logger";
 import { extractPermissions, extractRoles, generatePasscode, getAssignedRolePerAccountType, HTMLEmailGenerator, isStrongPassword } from "../utils/helpers";
 import { ACCOUNT_TYPE_ALUMNI, ACCOUNT_TYPE_SELECTION, EMAIL_REGEX } from "/imports/both/constants";
+import { MAX_RESEND_VERIFICATION_EMAIL_COUNT } from "../utils/constants";
 
 Meteor.users.deny({
   insert: () => true,
@@ -214,23 +215,64 @@ Meteor.methods({
   /**
    * Update the account to be verified
    *
-   * @param {String} code
+   * @param {Number} code
    */
 
   async "user.verifyAccountUsingVerificationCode"(code) {
     try {
-      const currentUserId = this.userId;
+      const user = Meteor.user();
+      const currentUserId = user._id;
       log("user.verifyAccountUsingVerificationCode: started", { currentUserId, code });
       if (!currentUserId) {
         throw new Meteor.Error("Not Authorized", "Not authorized to do such actions.");
       }
+      check(code, Number);
+      if (!code) {
+        throw new Meteor.Error("input-validations", `See Errors: Please provide the verification code.`);
+      }
+      if (user.profile.verificationCode !== code) {
+        throw new Meteor.Error("input-validations", `See Errors: The verification code is invalid.`);
+      }
 
-      const response = await Meteor.users.updateAsync({ _id: currentUserId }, { $set: { "emails.0.verified": true } });
+      if (user.emails[0].verified) {
+        throw new Meteor.Error("input-validations", `See Errors: The account is already verified.`);
+      }
+
+      const response = await Meteor.users.updateAsync({ _id: currentUserId }, { $set: { "emails.0.verified": true }, $unset: { "profile.verificationCode": 1, "profile.verificationAttempts": 1 } });
 
       log("user.verifyAccountUsingVerificationCode: attempted to verify the account", { currentUserId, response });
       return !!response;
     } catch (err) {
       error("user.verifyAccountUsingVerificationCode: internal server error", {
+        err,
+      });
+      throw new Meteor.Error(err?.error, err?.reason);
+    }
+  },
+
+  /**
+   * Resend verification code
+   *
+   * @returns {Boolean}
+   */
+
+  async "user.resendVerificationCode"() {
+    try {
+      const user = Meteor.user();
+      const currentUserId = user._id;
+      log("user.resendVerificationCode: started", { currentUserId });
+      if (!currentUserId) {
+        throw new Meteor.Error("Not Authorized", "Not authorized to do such actions.");
+      }
+      if (user.profile.verificationAttempts >= MAX_RESEND_VERIFICATION_EMAIL_COUNT) {
+        throw new Meteor.Error("input-validations", `See Errors: You have reached the maximum number of attempts to verify your account.`);
+      }
+      await Meteor.users.updateAsync({ _id: currentUserId }, { $inc: { "profile.verificationAttempts": 1 } });
+      const response = await Meteor.callAsync("user.sendVerificationCode", currentUserId);
+      log("user.resendVerificationCode: attempted to resend the verification code", { currentUserId, response });
+      return !!response;
+    } catch (err) {
+      error("user.resendVerificationCode: internal server error", {
         err,
       });
       throw new Meteor.Error(err?.error, err?.reason);
