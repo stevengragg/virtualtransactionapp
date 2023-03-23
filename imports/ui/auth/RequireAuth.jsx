@@ -11,13 +11,8 @@ function RequireAuth({ children }) {
   console.log("Require Authentication 🚀", { user, isLoading, isLoggedIn });
   if (!isLoggedIn) {
     return <Navigate to="/login" state={{ from: location.pathname }} />;
-  } else {
-    if (!user?.emails[0].verified) {
-      console.log(true);
-    }
-    return children;
-    // return <Navigate to="/v/verify-account" state={{ from: location.pathname }} />;
   }
+  return children;
 }
 
 export default RequireAuth;

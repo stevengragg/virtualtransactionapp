@@ -18,6 +18,7 @@ function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
+
     Meteor.loginWithPassword({ username: studentID }, password, (err) => {
       setLoading(false);
       if (err) {
@@ -27,7 +28,7 @@ function LoginPage() {
         });
         return;
       }
-      navigate("/dashboard", { replace: true });
+      navigate("/verification", { replace: true });
     });
   };
 

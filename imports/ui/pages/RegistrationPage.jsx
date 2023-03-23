@@ -61,7 +61,7 @@ function RegistrationPage() {
             });
             return;
           }
-          navigate("/dashboard", { replace: true });
+          navigate("/verify-account", { replace: true });
         });
 
         setFormData({

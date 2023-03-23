@@ -12,15 +12,7 @@ function AuthenticatedRoutes() {
     <UCCVTABrowserRouter>
       <Routes>
         {/* Private Authenticated Routes */}
-        {/* Verify Account */}
-        <Route
-          path="/v/verify-account"
-          element={
-            <RequireAuth>
-              <VerifyAccountPage />
-            </RequireAuth>
-          }
-        />
+
         <Route element={<PrivateLayout />}>
           {/* Dashboard */}
           <Route
