@@ -211,7 +211,31 @@ Meteor.methods({
     }
   },
 
-  async "user.verifyAccountUsingVerificationCode"() {},
+  /**
+   * Update the account to be verified
+   *
+   * @param {String} code
+   */
+
+  async "user.verifyAccountUsingVerificationCode"(code) {
+    try {
+      const currentUserId = this.userId;
+      log("user.verifyAccountUsingVerificationCode: started", { currentUserId, code });
+      if (!currentUserId) {
+        throw new Meteor.Error("Not Authorized", "Not authorized to do such actions.");
+      }
+
+      const response = await Meteor.users.updateAsync({ _id: currentUserId }, { $set: { "emails.0.verified": true } });
+
+      log("user.verifyAccountUsingVerificationCode: attempted to verify the account", { currentUserId, response });
+      return !!response;
+    } catch (err) {
+      error("user.verifyAccountUsingVerificationCode: internal server error", {
+        err,
+      });
+      throw new Meteor.Error(err?.error, err?.reason);
+    }
+  },
 
   async "user.updateProfileInfo"() {},
 
