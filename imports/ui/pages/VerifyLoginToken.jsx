@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import AuthenticationButton from "../components/shared/form/AuthenticationButton";
 import { AiOutlineLogout } from "@react-icons/all-files/ai/AiOutlineLogout";
 import NormalButton from "../components/shared/form/NormalButton";
+import useTitle from "../hooks/useTitle";
 
 const Timer = ({ time, onTimeEnd }) => {
   const [seconds, setSeconds] = React.useState(time);
@@ -22,6 +23,7 @@ const Timer = ({ time, onTimeEnd }) => {
 };
 
 function VerifyLoginToken() {
+  useTitle("Verify Login Token - Virtual Transaction Assistance | UCC Congress");
   const navigate = useNavigate();
 
   const [email] = useSearchParams();

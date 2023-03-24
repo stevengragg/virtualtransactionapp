@@ -5,15 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import LoginWithGoogle from "../components/auth/LoginWithGoogle";
-
 // import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible";
 // import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
 import AuthenticationButton from "../components/shared/form/AuthenticationButton";
 import { FormSelectMenu } from "../components/shared/form/FormSelectMenu";
 import { ACCOUNT_TYPE_ALUMNI, ACCOUNT_TYPE_SELECTION, COURSES, EMAIL_REGEX } from "/imports/both/constants";
 import { yearsBack } from "../utils/helper";
+import useTitle from "../hooks/useTitle";
 
 function RegistrationPage() {
+  useTitle("Registration - Virtual Transaction Assistance | UCC Congress");
   const navigate = useNavigate();
   const [displayRegistrationForm, setDisplayRegistrationForm] = React.useState(false);
   const [acceptedDataPrivacyPol, setAcceptedDataPrivacyPol] = React.useState(false);

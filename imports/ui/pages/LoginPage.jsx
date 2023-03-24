@@ -6,7 +6,9 @@ import { toast, ToastContainer } from "react-toastify";
 
 import LoginWithGoogle from "../components/auth/LoginWithGoogle";
 import AuthenticationButton from "../components/shared/form/AuthenticationButton";
+import useTitle from "../hooks/useTitle";
 function LoginPage() {
+  useTitle("Login | Student and Alumni Portal");
   let navigate = useNavigate();
 
   const [loading, setLoading] = React.useState(false);
