@@ -1,29 +1,29 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
-import { RequestCollection } from "./collection";
+import { Requests } from "./collection";
 
 export async function create(data) {
-  return RequestCollection.insertAsync({ ...data });
+  return Requests.insertAsync({ ...data });
 }
 
 export async function update(_id, data) {
   check(_id, String);
-  return RequestCollection.updateAsync(_id, { ...data });
+  return Requests.updateAsync(_id, { ...data });
 }
 
 export async function remove(_id) {
   check(_id, String);
-  return RequestCollection.removeAsync(_id);
+  return Requests.removeAsync(_id);
 }
 
 export async function findById(_id) {
   check(_id, String);
-  return RequestCollection.findOneAsync(_id);
+  return Requests.findOneAsync(_id);
 }
 
 Meteor.methods({
-  "Request.create": create,
-  "Request.update": update,
-  "Request.remove": remove,
-  "Request.find": findById,
+  "request.create": create,
+  "request.update": update,
+  "request.remove": remove,
+  "request.find": findById,
 });

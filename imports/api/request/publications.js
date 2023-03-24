@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
-import { RequestCollection } from "./collection";
+import { Requests } from "./collection";
 
-Meteor.publish("requests.allRequests", function publishRequests() {
-  return RequestCollection.find({});
+Meteor.publish("requests.allRequests", function () {
+  return Requests.find({});
 });
