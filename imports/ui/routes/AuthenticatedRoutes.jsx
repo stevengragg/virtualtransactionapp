@@ -5,7 +5,7 @@ import RequireAuth from "../auth/RequireAuth";
 import PrivateLayout from "../components/layout/PrivateLayout";
 import DashboardPage from "../pages/DashboardPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import VerifyAccountPage from "../pages/VerifyAccountPage";
+import VerifyAccountPage from "../pages/VerifyLoginToken";
 
 function AuthenticatedRoutes() {
   return (

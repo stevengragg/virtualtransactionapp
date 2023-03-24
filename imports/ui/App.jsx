@@ -14,7 +14,8 @@ const PreAuthenticatedApp = React.lazy(() => import("./routes/PreAuthenticatedRo
 function App() {
   const { isLoggedIn, user, isLoading } = useAuth();
   console.log("App 🚀 ==== ", { isLoggedIn, user, isLoading });
-  return isLoggedIn ? user?.emails[0].verified ? <AuthenticatedApp /> : <PreAuthenticatedApp /> : <UnauthenticatedApp />;
+  // return isLoggedIn ? user?.emails[0].verified ? <AuthenticatedApp /> : <PreAuthenticatedApp /> : <UnauthenticatedApp />;
+  return isLoggedIn ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }
 
 export default App;

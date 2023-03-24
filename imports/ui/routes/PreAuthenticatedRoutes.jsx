@@ -5,7 +5,7 @@ import RequireAuth from "../auth/RequireAuth";
 import PreAuthLayout from "../components/layout/PreAuthLayout";
 import NotFoundPage from "../pages/NotFoundPage";
 import VerificationPage from "../pages/VerificationPage";
-import VerifyAccountPage from "../pages/VerifyAccountPage";
+import VerifyAccountPage from "../pages/VerifyLoginToken";
 
 function PreAuthenticatedRoutes() {
   return (

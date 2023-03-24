@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import { Roles } from "meteor/alanning:roles";
 import { Email } from "meteor/email";
 import { check, Match } from "meteor/check";
@@ -126,6 +127,27 @@ Meteor.methods({
       Meteor.callAsync("user.sendVerificationCode", userId);
     } catch (err) {
       error("user.create: internal server error", {
+        err,
+      });
+      throw new Meteor.Error(err?.error, err?.reason);
+    }
+  },
+
+  async "user.sendLoginTokenEmail"(username) {
+    try {
+      log(`user.sendLoginTokenEmail: started`, { username });
+      check(username, String);
+
+      // Find the user
+      const user = Accounts.findUserByUsername(username);
+      if (!user) {
+        throw new Meteor.Error("user-not-found", "User not found.");
+      }
+      this.unblock();
+      const response = Accounts.sendLoginTokenEmail({ userId: user._id, sequence: generatePasscode(), email: user.emails[0].address });
+      log(`user.sendLoginTokenEmail: email sent`, { response });
+    } catch (err) {
+      error("user.sendLoginTokenEmail: internal server error", {
         err,
       });
       throw new Meteor.Error(err?.error, err?.reason);

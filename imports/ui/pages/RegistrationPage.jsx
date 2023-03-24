@@ -1,15 +1,16 @@
 import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import LoginWithGoogle from "../components/auth/LoginWithGoogle";
 
-import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible";
-import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
+// import { AiFillEyeInvisible } from "@react-icons/all-files/ai/AiFillEyeInvisible";
+// import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
 import AuthenticationButton from "../components/shared/form/AuthenticationButton";
 import { FormSelectMenu } from "../components/shared/form/FormSelectMenu";
-import { ACCOUNT_TYPE_ALUMNI, ACCOUNT_TYPE_SELECTION, COURSES } from "/imports/both/constants";
+import { ACCOUNT_TYPE_ALUMNI, ACCOUNT_TYPE_SELECTION, COURSES, EMAIL_REGEX } from "/imports/both/constants";
 import { yearsBack } from "../utils/helper";
 
 function RegistrationPage() {
@@ -18,8 +19,8 @@ function RegistrationPage() {
   const [acceptedDataPrivacyPol, setAcceptedDataPrivacyPol] = React.useState(false);
   const [showYearGraduated, setShowYearGraduated] = React.useState(false);
 
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showPassword2, setShowPassword2] = React.useState(false);
+  // const [showPassword, setShowPassword] = React.useState(false);
+  // const [showPassword2, setShowPassword2] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState("");
 
@@ -29,8 +30,8 @@ function RegistrationPage() {
     firstName: "",
     lastName: "",
     middleName: "",
-    password: "",
-    confirmPassword: "",
+    // password: "",
+    // confirmPassword: "",
     course: "",
     accountType: "",
     yearGraduated: "",
@@ -47,44 +48,112 @@ function RegistrationPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    Meteor.callAsync("user.create", { ...formData })
-      .then((response) => {
-        console.log(response);
+    console.log("lets go");
+    // Meteor.callAsync("user.create", { ...formData })
+    //   .then((response) => {
+    //     console.log(response);
 
-        // Login user
-        Meteor.loginWithPassword({ username: formData?.studentId }, formData.password, (err) => {
-          setLoading(false);
-          if (err) {
-            // alert(err?.reason);
-            toast.error(err?.reason, {
-              position: toast.POSITION.TOP_CENTER,
-            });
-            return;
-          }
-          navigate("/verify-account", { replace: true });
-        });
+    //     // Login user
+    //     Meteor.loginWithPassword({ username: formData?.studentId }, formData.password, (err) => {
+    //       setLoading(false);
+    //       if (err) {
+    //         // alert(err?.reason);
+    //         toast.error(err?.reason, {
+    //           position: toast.POSITION.TOP_CENTER,
+    //         });
+    //         return;
+    //       }
+    //       navigate("/verify-account", { replace: true });
+    //     });
 
-        setFormData({
-          studentId: "",
-          email: "",
-          firstName: "",
-          lastName: "",
-          middleName: "",
-          password: "",
-          confirmPassword: "",
-          course: "",
-          accountType: "",
-          yearGraduated: "",
-        });
-      })
-      .catch((error) => {
-        console.error(error?.reason);
-        setErrors(error?.reason);
-        setLoading(false);
-        toast.error(error?.reason, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+    //     setFormData({
+    //       studentId: "",
+    //       email: "",
+    //       firstName: "",
+    //       lastName: "",
+    //       middleName: "",
+    //       // password: "",
+    //       // confirmPassword: "",
+    //       course: "",
+    //       accountType: "",
+    //       yearGraduated: "",
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.error(error?.reason);
+    //     setErrors(error?.reason);
+    //     setLoading(false);
+    //     toast.error(error?.reason, {
+    //       position: toast.POSITION.TOP_CENTER,
+    //     });
+    //   });
+
+    let errorArray = [];
+    // Perform additional custom validation if needed
+
+    if (!formData.studentId || !formData.email || !formData.firstName || !formData.lastName || !formData.course || !formData.accountType) {
+      toast.error("See Errors: Please provide all required fields.", {
+        position: toast.POSITION.TOP_CENTER,
       });
+      return;
+    }
+
+    if (formData.email && !formData.email.match(EMAIL_REGEX)) {
+      errorArray.push("Please provide a valid email address.");
+    }
+
+    if (!ACCOUNT_TYPE_SELECTION.includes(formData.accountType || "none-of-the-above")) {
+      errorArray.push("Please select allowed account type (Alumni, Student).");
+    }
+
+    if (formData.accountType && formData.accountType === ACCOUNT_TYPE_ALUMNI && !formData.yearGraduated) {
+      errorArray.push("Please select year graduated");
+    }
+    console.log(errorArray);
+    if (errorArray.length) {
+      console.log(errorArray.join());
+      toast.error(errorArray.join(), {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
+
+    // Create the new user object
+    const newUser = {
+      username: formData.studentId, // Student ID as User name
+      email: formData.email,
+      profile: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        middleName: formData.middleName,
+        course: formData.course,
+        accountType: formData.accountType,
+        acceptsDataPrivacy: true,
+        yearGraduated: formData.yearGraduated,
+      },
+    };
+
+    console.log(newUser);
+
+    Accounts.requestLoginTokenForUser(
+      {
+        selector: { username: formData.studentId },
+        userData: newUser,
+        options: {
+          userCreationDisabled: false,
+        },
+      },
+      (err) => {
+        setLoading(false);
+        if (err) {
+          toast.error(err?.reason, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          return;
+        }
+        navigate(`/verify-login-token?email=${formData.email}`, { replace: true });
+      },
+    );
   };
 
   const registrationForm = (
@@ -132,9 +201,9 @@ function RegistrationPage() {
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="mt-1 flex flex-col lg:flex-row space-x-0 lg:space-x-2">
-        {/* Password Field */}
+
         <div className="flex-1">
           <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
             Password <span className="text-red-500">*</span>
@@ -158,7 +227,7 @@ function RegistrationPage() {
             </div>
           </div>
         </div>
-        {/* Confirm Password Field */}
+
         <div className="flex-1">
           <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
             Confirm Password <span className="text-red-500">*</span>
@@ -181,7 +250,7 @@ function RegistrationPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="px-1 my-2">
         <p className="text-semibold text-sm text-slate-500 leading-1">Personal Information</p>

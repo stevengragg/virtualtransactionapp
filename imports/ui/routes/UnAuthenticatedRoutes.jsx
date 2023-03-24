@@ -6,6 +6,7 @@ import LandingPage from "../pages/LandingPage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import RegistrationPage from "../pages/RegistrationPage";
+import VerifyLoginToken from "../pages/VerifyLoginToken";
 
 function UnAuthenticatedRoutes() {
   return (
@@ -17,6 +18,8 @@ function UnAuthenticatedRoutes() {
         </Route>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
+          {/* Verify Account */}
+          <Route path="/verify-login-token" element={<VerifyLoginToken />} />
           <Route path="/register" element={<RegistrationPage />} />
         </Route>
 
