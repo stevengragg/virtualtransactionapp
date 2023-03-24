@@ -5,6 +5,7 @@ import RequireAuth from "../auth/RequireAuth";
 import PrivateLayout from "../components/layout/PrivateLayout";
 import DashboardPage from "../pages/DashboardPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import RequestsPage from "../pages/RequestsPage";
 import VerifyAccountPage from "../pages/VerifyLoginToken";
 
 function AuthenticatedRoutes() {
@@ -20,6 +21,15 @@ function AuthenticatedRoutes() {
             element={
               <RequireAuth>
                 <DashboardPage />
+              </RequireAuth>
+            }
+          />
+          {/* Requests */}
+          <Route
+            path="/requests"
+            element={
+              <RequireAuth>
+                <RequestsPage />
               </RequireAuth>
             }
           />

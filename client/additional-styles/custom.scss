@@ -1,0 +1,13 @@
+a:hover {
+  > div {
+    > div {
+      > svg {
+        stroke: #03b2cb !important;
+      }
+    }
+  }
+}
+
+.PhoneInputInput:focus {
+  @apply ring-0 border-none;
+}

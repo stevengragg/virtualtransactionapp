@@ -9,7 +9,7 @@ import { useAuth } from "./hooks/useAuth.js";
 
 const AuthenticatedApp = React.lazy(() => import("./routes/AuthenticatedRoutes.jsx"));
 const UnauthenticatedApp = React.lazy(() => import("./routes/UnAuthenticatedRoutes.jsx"));
-const PreAuthenticatedApp = React.lazy(() => import("./routes/PreAuthenticatedRoutes.jsx"));
+// const PreAuthenticatedApp = React.lazy(() => import("./routes/PreAuthenticatedRoutes.jsx"));
 
 function App() {
   const { isLoggedIn, user, isLoading } = useAuth();
