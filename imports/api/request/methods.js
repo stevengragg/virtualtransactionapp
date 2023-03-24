@@ -1,6 +1,6 @@
-import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
-import { RequestCollection } from './collection';
+import { Meteor } from "meteor/meteor";
+import { check } from "meteor/check";
+import { RequestCollection } from "./collection";
 
 export async function create(data) {
   return RequestCollection.insertAsync({ ...data });
@@ -22,8 +22,8 @@ export async function findById(_id) {
 }
 
 Meteor.methods({
-  'Request.create': create,
-  'Request.update': update,
-  'Request.remove': remove,
-  'Request.find': findById
+  "Request.create": create,
+  "Request.update": update,
+  "Request.remove": remove,
+  "Request.find": findById,
 });
