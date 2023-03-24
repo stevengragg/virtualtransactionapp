@@ -32,7 +32,7 @@ function LoginPage() {
           });
           return;
         }
-        navigate(`/verify-login-token?id=${studentID}`, { replace: true });
+        navigate(`/verify-login-token?email=${email}`, { replace: true });
       },
     );
 
