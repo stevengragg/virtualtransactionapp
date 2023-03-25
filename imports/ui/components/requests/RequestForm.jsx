@@ -3,7 +3,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../hooks/useAuth";
-import { MAX_ALLOWED_REQUEST_AT_A_TIME } from "../../utils/constants";
+import { MAX_ALLOWED_REQUEST_AT_A_TIME, MODES_OF_CLAIMING } from "../../utils/constants";
 import { FormSelectMenu } from "../shared/form/FormSelectMenu";
 import RequestFormButton from "../shared/form/RequestFormButton";
 import { ACCOUNT_TYPE_STUDENT, ALLOWED_ALUMNI_REQUESTS, ALLOWED_STUDENT_REQUESTS, ROLE_STUDENT } from "/imports/both/constants";
@@ -13,6 +13,8 @@ function RequestForm() {
   console.log(auth);
   let navigate = useNavigate();
   const [forms, setForms] = React.useState([]);
+  const [modeOfClaiming, setModeOfClaiming] = React.useState("");
+
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState("");
   const handleAddForm = () => {
@@ -44,7 +46,7 @@ function RequestForm() {
     event.preventDefault();
     console.log(forms); // do something with the form data here
     setLoading(true);
-    const checkEmpty = forms.filter((form) => form.documents === "" || form.purpose === "");
+    const checkEmpty = forms.filter((form) => form.documents === "" || form.purpose === "" || !modeOfClaiming);
     if (checkEmpty.length > 0) {
       setLoading(false);
       return toast.error("Please fill all the fields", {
@@ -52,7 +54,7 @@ function RequestForm() {
       });
     }
 
-    Meteor.callAsync("request.create", { requests: forms })
+    Meteor.callAsync("request.create", { requests: forms, modeOfClaiming })
       .then((res) => {
         console.log(res);
         setLoading(false);
@@ -60,7 +62,7 @@ function RequestForm() {
         toast.success("Request sent successfully", {
           position: toast.POSITION.TOP_CENTER,
         });
-        setForms([{ documents: "", purpose: "" }]);
+        setForms([]);
         window.location.reload();
       })
       .catch((error) => {
@@ -77,7 +79,7 @@ function RequestForm() {
         {forms.map((form, index) => (
           <div key={index} className="w-full lg:basis-2/6 border border-slate-600 rounded-xl shadow-soft-md p-4">
             <div className="px-1">
-              <p className="text-semibold text-sm text-slate-500 leading-1">Request {index + 1}</p>
+              <p className="text-semibold text-sm text-slate-500 leading-1">Document {index + 1}</p>
             </div>
             {/* Select Document */}
             <div className="mt-1">
@@ -115,10 +117,29 @@ function RequestForm() {
                 />
               </div>
             </div>
+
             <RequestFormButton type="button" btnTitle={loading ? "..." : "Cancel"} disabled={loading} btnType="cancel" onClick={() => handleCancelForm(index)} />
           </div>
         ))}
       </form>
+      {forms?.length ? (
+        <div className="flex flex-col space-y-2">
+          <p className="font-medium text-gray-700">Mode of Claiming</p>
+          {MODES_OF_CLAIMING.map((option) => (
+            <label key={option.value} className="inline-flex items-center space-x-2">
+              <input
+                type="radio"
+                value={option.value}
+                name="modeOfClaiming"
+                checked={modeOfClaiming === option.value}
+                onChange={(e) => setModeOfClaiming(e.target.value)}
+                className="form-radio text-blue-600 h-4 w-4"
+              />
+              <span className="text-gray-900">{option.label}</span>
+            </label>
+          ))}
+        </div>
+      ) : null}
       <div className="flex space-x-2">
         <div className="flex-none">
           {forms?.length !== MAX_ALLOWED_REQUEST_AT_A_TIME && (

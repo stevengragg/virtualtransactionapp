@@ -100,12 +100,12 @@ export const extractPageTitle = (path) => {
       return "Dashboard";
     case "/requests":
       return "Requests";
-    case "/requests/new":
-      return "New Request";
+    case "/requests/:id":
+      return "Manage Request";
     case "/settings":
       return "Settings";
     default:
-      return "Page";
+      return "Entry";
   }
 };
 
