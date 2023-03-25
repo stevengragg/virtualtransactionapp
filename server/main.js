@@ -1,10 +1,11 @@
-import '/imports/api/notifications';
+import "/imports/api/notifications";
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 
 // api-only
 import "/imports/api/users";
 import "/imports/api/request";
+import "/imports/api/notifications";
 
 // both
 import vta from "/imports/both/vta";

@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Roles } from "meteor/alanning:roles";
 import { Accounts } from "meteor/accounts-base";
-import { log } from "/imports/both/logger";
+import { error, log } from "/imports/both/logger";
 import { ROLE_ALUMNI, ROLE_MOBILE_APP_USER, ROLE_STUDENT, ROLE_WEB_APP_USER } from "/imports/both/constants";
 
 function initOnCreateUser() {
@@ -35,6 +35,14 @@ function initOnCreateUser() {
         customizedUser,
       });
     }
+
+    Meteor.callAsync("notification.create", { userId: customizedUser._id, message: "🚀 Welcome to Virtual Transaction Assistance! Create your first Request now.", createdAt: new Date(), link: "#" })
+      .then((response) => {
+        log("account on create user: notification pushed", { response });
+      })
+      .catch((err) => {
+        error("account on create user: notification creation failed", { err });
+      });
 
     return customizedUser;
   });

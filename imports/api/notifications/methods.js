@@ -1,9 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
-import { Notifications } from "./collection";
+import { Notifications } from "/imports/both/collections/Notifications";
 
 export async function create(data) {
-  return Notifications.insertAsync({ ...data });
+  // if(!this.userId) throw new Meteor.Error("not-authorized", "You are not authorized to perform this action");
+  return await Notifications.insertAsync({ ...data });
 }
 
 export async function update(_id, data) {

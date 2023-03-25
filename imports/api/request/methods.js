@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
-import { Requests } from "./collection";
+import { Requests } from "/imports/both/collections/Requests";
 
 export async function create(data) {
   return Requests.insertAsync({ ...data });
