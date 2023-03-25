@@ -7,7 +7,6 @@ Meteor.publish("requests.getAll", function () {
 });
 
 Meteor.publish("requests.getOne", function (requestId) {
-  console.log(requestId);
   if (!requestId) return this.ready();
   const userId = this.userId;
   if (!userId) return this.ready();
