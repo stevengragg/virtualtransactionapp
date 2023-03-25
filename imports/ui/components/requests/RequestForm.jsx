@@ -40,6 +40,24 @@ function RequestForm() {
   const handleSubmitForms = (event) => {
     event.preventDefault();
     console.log(forms); // do something with the form data here
+    setLoading(true);
+    Meteor.callAsync("request.create", { requests: forms })
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+
+        toast.success("Request sent successfully", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        setForms([{ documents: "", purpose: "" }]);
+        window.location.reload();
+      })
+      .catch((error) => {
+        setLoading(false);
+        toast.error(error.reason, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      });
   };
 
   return (

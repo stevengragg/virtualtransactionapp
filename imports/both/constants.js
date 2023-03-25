@@ -110,3 +110,11 @@ export const ALLOWED_STUDENT_REQUESTS = [
   "Certified true copy of Grades",
   "Certified true copy of Certificate of No I.D.",
 ];
+
+export const PENDING = "Pending";
+export const APPROVED = "For Scheduling";
+export const DENIED = "Denied";
+export const SCHEDULED = "Scheduled";
+export const COMPLETED = "Completed";
+export const CANCELLED = "Cancelled";
+export const WAITING_FOR_PAYMENT = "Waiting for Payment";
