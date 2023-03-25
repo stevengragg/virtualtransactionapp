@@ -1,5 +1,7 @@
 // import moment from "moment";
 
+import { APPROVED, CANCELLED, COMPLETED, DENIED, FOR_SCHEDULING, PENDING, SCHEDULED, WAITING_FOR_PAYMENT } from "/imports/both/constants";
+
 /**
  * Combine all css class string passed in this function
  *
@@ -104,5 +106,26 @@ export const extractPageTitle = (path) => {
       return "Settings";
     default:
       return "Page";
+  }
+};
+
+export const extractColorOfStatus = (status) => {
+  switch (status) {
+    case PENDING:
+      return "bg-yellow-700 text-white";
+    case FOR_SCHEDULING:
+      return "bg-green-700 text-white";
+    case DENIED:
+      return "bg-red-700 text-white";
+    case COMPLETED:
+      return "bg-blue-700 text-white";
+    case SCHEDULED:
+      return "bg-orange-700 text-white";
+    case WAITING_FOR_PAYMENT:
+      return "bg-purple-700 text-white";
+    case CANCELLED:
+      return "bg-gray-700 text-white";
+    default:
+      return "bg-gray-500";
   }
 };

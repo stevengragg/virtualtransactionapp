@@ -55,7 +55,7 @@ function PrivateNavigation({ user, title, sideBarOpen, setSideBarOpen }) {
         </div>
         <div className="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
           <div className="flex items-center md:ml-auto md:pr-4">
-            <ul className="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full cursor-pointer space-x-2">
+            <ul className="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full  space-x-2">
               {/* <li className="flex items-center">
                 <TiThMenuOutline className="text-slate-800" />
               </li> */}
@@ -68,7 +68,7 @@ function PrivateNavigation({ user, title, sideBarOpen, setSideBarOpen }) {
               <li className="flex items-center">
                 <hr className=" w-px h-6 bg-slate-700 mx-3" />
               </li>
-              <li className="flex items-center space-x-1" onClick={() => Meteor.logout(() => window.location.replace("/login"))}>
+              <li className="flex items-center space-x-1 cursor-pointer" onClick={() => Meteor.logout(() => window.location.replace("/login"))}>
                 <RiLogoutBoxRLine className="text-red-500" />
 
                 <span className="text-sm font-semibold text-red-500">Logout</span>

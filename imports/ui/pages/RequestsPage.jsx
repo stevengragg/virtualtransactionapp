@@ -11,7 +11,7 @@ function RequestsPage() {
   return (
     <>
       <ToastContainer />
-      <div class="w-full px-6 py-6 mx-auto">
+      <div className="w-full px-6 py-6 mx-auto">
         {/* Request content */}
 
         <div className="flex flex-col gap-8 w-full">

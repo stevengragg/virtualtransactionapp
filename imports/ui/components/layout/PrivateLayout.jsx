@@ -20,7 +20,7 @@ function PrivateLayout() {
 
       <main className="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
         {/* Navigation Header */}
-        <div class="mb-20">
+        <div className="mb-20">
           <PrivateNavigation user={auth?.user} title={extractPageTitle(pathname)} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
           <Outlet />
         </div>

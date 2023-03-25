@@ -111,8 +111,22 @@ export const ALLOWED_STUDENT_REQUESTS = [
   "Certified true copy of Certificate of No I.D.",
 ];
 
+export const ALLOWED_ALUMNI_REQUESTS = [
+  "Transcript of Records (TOR)",
+  "Certificate of Graduation",
+  "Clearance Fee",
+  "Good Moral Certificate",
+  "Honorable Dismissal",
+  "Completion Form",
+  "Certification Fee for Graduate",
+  "Certification Fee for Grades",
+  "Certified trye copy of Diploma",
+  "Replacement fee for registration form",
+  "Replacement fee for permits",
+];
+
 export const PENDING = "Pending";
-export const APPROVED = "For Scheduling";
+export const FOR_SCHEDULING = "For Scheduling";
 export const DENIED = "Denied";
 export const SCHEDULED = "Scheduled";
 export const COMPLETED = "Completed";

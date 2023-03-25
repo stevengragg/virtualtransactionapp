@@ -40,11 +40,15 @@ export const FormSelectMenu = (props) => {
                 {/* <FormInput /> */}
                 {props &&
                   props?.selection.map((item, index) => (
-                    <Listbox.Option key={index} className={({ active }) => classNames(active ? "text-white bg-orange-300" : "text-gray-900", "select-none relative py-2 pl-3 pr-9")} value={item}>
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) => classNames(active ? "text-white bg-orange-300" : "text-gray-900", "border-b border-slate-200 select-none relative py-2 pl-3 pr-9")}
+                      value={item}
+                    >
                       {({ selected, active }) => (
                         <>
-                          <div className="flex items-center">
-                            <span className={classNames(selected ? "font-semibold text-slate-700" : "font-normal", "ml-3 block truncate")}>{item}</span>
+                          <div className="flex items-center ">
+                            <span className={classNames(selected ? "font-semibold text-slate-700" : "font-normal", "ml-3 block overflow")}>{item}</span>
                           </div>
 
                           {selected ? (

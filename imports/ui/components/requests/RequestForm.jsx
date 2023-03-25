@@ -2,14 +2,17 @@ import { Meteor } from "meteor/meteor";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../../hooks/useAuth";
 import { MAX_ALLOWED_REQUEST_AT_A_TIME } from "../../utils/constants";
 import { FormSelectMenu } from "../shared/form/FormSelectMenu";
 import RequestFormButton from "../shared/form/RequestFormButton";
-import { ALLOWED_STUDENT_REQUESTS } from "/imports/both/constants";
+import { ACCOUNT_TYPE_STUDENT, ALLOWED_ALUMNI_REQUESTS, ALLOWED_STUDENT_REQUESTS, ROLE_STUDENT } from "/imports/both/constants";
 
 function RequestForm() {
+  const auth = useAuth();
+  console.log(auth);
   let navigate = useNavigate();
-  const [forms, setForms] = React.useState([{ documents: "", purpose: "" }]);
+  const [forms, setForms] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState("");
   const handleAddForm = () => {
@@ -41,6 +44,14 @@ function RequestForm() {
     event.preventDefault();
     console.log(forms); // do something with the form data here
     setLoading(true);
+    const checkEmpty = forms.filter((form) => form.documents === "" || form.purpose === "");
+    if (checkEmpty.length > 0) {
+      setLoading(false);
+      return toast.error("Please fill all the fields", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+
     Meteor.callAsync("request.create", { requests: forms })
       .then((res) => {
         console.log(res);
@@ -77,10 +88,10 @@ function RequestForm() {
                 <FormSelectMenu
                   idx={index}
                   id={`documents-${index}`}
-                  selection={ALLOWED_STUDENT_REQUESTS}
+                  selection={auth?.user?.profile?.accountType === ACCOUNT_TYPE_STUDENT ? ALLOWED_STUDENT_REQUESTS : ALLOWED_ALUMNI_REQUESTS}
                   handleSelection={handleFormChange}
                   name="documents"
-                  placeHolder="Select Your Course"
+                  placeHolder="Select one document"
                   loading={loading}
                 />
               </div>
@@ -107,16 +118,18 @@ function RequestForm() {
             <RequestFormButton type="button" btnTitle={loading ? "..." : "Cancel"} disabled={loading} btnType="cancel" onClick={() => handleCancelForm(index)} />
           </div>
         ))}
-        <div className="w-48">
+      </form>
+      <div className="flex space-x-2">
+        <div className="flex-none">
           {forms?.length !== MAX_ALLOWED_REQUEST_AT_A_TIME && (
             <RequestFormButton type="button" btnTitle={loading ? "..." : "New Request"} disabled={loading} btnType="success" onClick={handleAddForm} />
           )}
         </div>
-      </form>
-      <div className="w-48 mb-8">
-        {forms?.length ? (
-          <RequestFormButton form="8beebcf2-3f03-4ecb-8d9c-7115b39dce92" type="submit" btnTitle={loading ? "Processing..." : "Submit Request(s)"} disabled={loading} btnType="submit" />
-        ) : null}
+        <div className="flex-none">
+          {forms?.length ? (
+            <RequestFormButton form="8beebcf2-3f03-4ecb-8d9c-7115b39dce92" type="submit" btnTitle={loading ? "Processing..." : "Submit Request(s)"} disabled={loading} btnType="submit" />
+          ) : null}
+        </div>
       </div>
     </>
   );
