@@ -13,7 +13,7 @@ function PrivateLayout() {
   if (!auth?.user?.emails[0].verified) return <Navigate to="/verify-account" />;
 
   return (
-    <div className="h-screen bg-blue-50">
+    <div className="h-screen bg-transparent">
       {/* Sidebar */}
       <PrivateSideBar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
       {/* Content area */}

@@ -27,7 +27,7 @@ function PrivateNavigation({ user, title, sideBarOpen, setSideBarOpen }) {
   console.log(notifications, isLoading);
 
   return (
-    <nav className=" relative flex flex-wrap items-center justify-between px-0 py-1 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start bg-white">
+    <nav className="mt-4 relative flex flex-wrap items-center justify-between px-0 py-1 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start bg-blue-100">
       <div className="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
         <nav className="flex justify-between">
           <div className="flex-none">

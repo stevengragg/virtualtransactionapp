@@ -11,7 +11,11 @@ export const FormSelectMenu = (props) => {
   const [selected, setSelected] = React.useState(props?.defaultSelected || null);
   const handleSelectedItem = (item) => {
     setSelected(item);
-    props?.handleSelection({ name: props?.name, value: item?.toString() });
+    if (props?.idx !== undefined || props?.idx !== null) {
+      props?.handleSelection({ name: props?.name, value: item?.toString() }, props?.idx);
+    } else {
+      props?.handleSelection({ name: props?.name, value: item?.toString() });
+    }
   };
   return (
     <Listbox value={selected} onChange={handleSelectedItem} disabled={props?.loading} name={props?.name}>

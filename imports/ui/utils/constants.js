@@ -1,0 +1,1 @@
+export const MAX_ALLOWED_REQUEST_AT_A_TIME = 3;

@@ -102,3 +102,11 @@ export const COURSES = [
   "CPE",
   "CPED",
 ];
+
+export const ALLOWED_STUDENT_REQUESTS = [
+  "Statement of Account (SOA)",
+  "Certificate of Enrollment",
+  "Certified true copy of Registration Form",
+  "Certified true copy of Grades",
+  "Certified true copy of Certificate of No I.D.",
+];
