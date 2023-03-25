@@ -19,7 +19,7 @@ function FootNavItem({ title, icon, itemPath, onClick }) {
       >
         <div
           className={classNames(
-            "mr-2 flex  h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5",
+            "mx-auto flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center p-1",
             match ? "bg-gradient-to-tl from-orange-700 to-orange-500 shadow-soft-2xl bg-white" : "",
           )}
         >
