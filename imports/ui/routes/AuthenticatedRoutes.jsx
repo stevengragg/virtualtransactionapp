@@ -5,7 +5,9 @@ import RequireAuth from "../auth/RequireAuth";
 import PrivateLayout from "../components/layout/PrivateLayout";
 import DashboardPage from "../pages/DashboardPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import NotificationsPage from "../pages/NotificationsPage";
 import RequestsPage from "../pages/RequestsPage";
+import SettingsPage from "../pages/SettingsPage";
 import VerifyAccountPage from "../pages/VerifyLoginToken";
 
 function AuthenticatedRoutes() {
@@ -30,6 +32,24 @@ function AuthenticatedRoutes() {
             element={
               <RequireAuth>
                 <RequestsPage />
+              </RequireAuth>
+            }
+          />
+          {/* Settings */}
+          <Route
+            path="/settings"
+            element={
+              <RequireAuth>
+                <SettingsPage />
+              </RequireAuth>
+            }
+          />
+          {/* Notifications */}
+          <Route
+            path="/notifications"
+            element={
+              <RequireAuth>
+                <NotificationsPage />
               </RequireAuth>
             }
           />
