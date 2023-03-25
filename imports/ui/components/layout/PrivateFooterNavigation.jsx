@@ -14,7 +14,7 @@ const routes = [
   },
 
   {
-    path: "/requests",
+    path: "/settings",
     title: "Settings",
     icon: "settings",
   },

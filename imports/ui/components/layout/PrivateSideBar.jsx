@@ -15,11 +15,11 @@ const routes = [
     icon: "requests",
   },
 
-  // {
-  //   path: "/settings",
-  //   title: "Settings",
-  //   icon: "settings",
-  // },
+  {
+    path: "/settings",
+    title: "Settings",
+    icon: "settings",
+  },
 ];
 
 function PrivateSideBar({ sideBarOpen, setSideBarOpen }) {
