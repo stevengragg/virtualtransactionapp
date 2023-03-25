@@ -133,6 +133,72 @@ Meteor.methods({
     }
   },
 
+  async "user.update"({ firstName, lastName, middleName, course, accountType, yearGraduated }) {
+    try {
+      log(`user.update: started`, {
+        firstName,
+        lastName,
+        middleName,
+        course,
+        accountType,
+        yearGraduated,
+      });
+      // Make sure that user can only access user.create when they are not logged in
+      const currentUserId = this.userId;
+      if (!currentUserId) throw new Meteor.Error("Not Authorized", "Not authorized to do such actions.");
+      // Validate the arguments using the check package
+
+      check(firstName, String);
+      check(lastName, String);
+      check(course, String);
+      check(accountType, String);
+      if (accountType === ACCOUNT_TYPE_ALUMNI) check(yearGraduated, String);
+
+      // TODO: Provide more intense validation here
+
+      let errorArray = [];
+      // Perform additional custom validation if needed
+
+      if (!firstName || !lastName || !course || !accountType) {
+        throw new Meteor.Error("input-validations", `See Errors: Please provide all required fields.`);
+      }
+
+      if (!ACCOUNT_TYPE_SELECTION.includes(accountType || "none-of-the-above")) {
+        errorArray.push("Please select allowed account type (Alumni, Student).");
+      }
+
+      if (accountType && accountType === ACCOUNT_TYPE_ALUMNI && !yearGraduated) {
+        errorArray.push("Please select year graduated");
+      }
+
+      if (errorArray.length) {
+        throw new Meteor.Error("input-validations", `See Errors: ${errorArray}`);
+      }
+
+      // Update user profile information
+      const updateUser = await Meteor.users.updateAsync(
+        { _id: currentUserId },
+        {
+          $set: {
+            "profile.firstName": firstName,
+            "profile.lastName": lastName,
+            "profile.middleName": middleName,
+            "profile.course": course,
+            "profile.accountType": accountType,
+            "profile.yearGraduated": yearGraduated,
+          },
+        },
+      );
+      log(`user.update: attempted to update the user`, { updateUser });
+      return !!updateUser;
+    } catch (err) {
+      error("user.update: internal server error", {
+        err,
+      });
+      throw new Meteor.Error(err?.error, err?.reason);
+    }
+  },
+
   async "user.sendLoginTokenEmail"(username) {
     try {
       log(`user.sendLoginTokenEmail: started`, { username });

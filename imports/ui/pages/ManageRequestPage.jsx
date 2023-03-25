@@ -49,10 +49,11 @@ function ManageRequestPage() {
     <div className="w-full px-6 pt-6 mx-auto pb-24 ">
       <div className="relative flex flex-col h-full min-w-0 break-words bg-white border shadow-soft-xl rounded-2xl bg-clip-border border-slate-500 mb-8 pb-8">
         <div className="flex flex-wrap">
-          <div className="flex-1 p-4">{request?.isApproved ? "✅" : "❌"} Request Approved ▶</div>
-          <div className="flex-1 p-4">{request?.isPaid ? "✅" : "❌"} OR Paid/Request Paid ▶</div>
-          <div className="flex-1 p-4">{request?.isScheduled ? "✅" : "❌"} Request Scheduled ▶</div>
-          <div className="flex-1 p-4">{request?.isCompleted ? "✅" : "❌"} Request Completed ▶</div>
+          <div className="flex-1 p-4">{request?.isApproved ? "✅" : "➖"} Request Approved ▶</div>
+          <div className="flex-1 p-4">{request?.isPaid ? "✅" : "➖"} OR Paid/Request Paid ▶</div>
+          <div className="flex-1 p-4">{request?.isScheduled ? "✅" : "➖"} Request Scheduled ▶</div>
+          <div className="flex-1 p-4">{request?.isCompleted ? "✅" : "➖"} Request Completed ▶</div>
+          <div className="flex-1 p-4">{request?.isDenied ? "❌" : "➖"} Request Denied(Payment issue or Other issue) ▶</div>
         </div>
         <div className="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
           <div className="flex flex-wrap -mx-3">
@@ -99,6 +100,12 @@ function ManageRequestPage() {
             </div>
           </div>
         )}
+        {request?.isDenied ? (
+          <div className="flex-auto p-4">
+            <label className="text-lg font-semibold text-slate-700">Your Request was denied due to this reason: </label>
+            <p className="text-semibold text-sm text-slate-500 leading-1">{request?.deniedReason || "No reason. Please go to the registrar to ask for help."}</p>
+          </div>
+        ) : null}
 
         <div className="p-8 flex flex-col gap-4">
           {request?.requests?.map((item, idx) => (

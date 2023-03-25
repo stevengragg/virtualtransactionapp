@@ -1,6 +1,6 @@
 import React from "react";
 
-function DashboardRowOne() {
+function DashboardRowOne({ requestsWaitingForApproval, requestsPaid, requestsScheduled, requestsCompleted }) {
   return (
     <div>
       {" "}
@@ -11,15 +11,12 @@ function DashboardRowOne() {
               <div className="flex flex-row -mx-3">
                 <div className="flex-none w-2/3 max-w-full px-3">
                   <div>
-                    <p className="mb-0 font-sans font-semibold leading-normal text-sm">Today's Money</p>
-                    <h5 className="mb-0 font-bold">
-                      $53,000
-                      <span className="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
-                    </h5>
+                    <p className="mb-0 font-sans font-semibold leading-normal text-sm">Waiting For Approval</p>
+                    <h5 className="mb-0 font-bold">{requestsWaitingForApproval}</h5>
                   </div>
                 </div>
                 <div className="px-3 text-right basis-1/3">
-                  <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                  <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-700 to-orange-500">
                     <i className="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
                   </div>
                 </div>
@@ -34,16 +31,13 @@ function DashboardRowOne() {
               <div className="flex flex-row -mx-3">
                 <div className="flex-none w-2/3 max-w-full px-3">
                   <div>
-                    <p className="mb-0 font-sans font-semibold leading-normal text-sm">Today's Users</p>
-                    <h5 className="mb-0 font-bold">
-                      2,300
-                      <span className="leading-normal text-sm font-weight-bolder text-lime-500">+3%</span>
-                    </h5>
+                    <p className="mb-0 font-sans font-semibold leading-normal text-sm">Paid</p>
+                    <h5 className="mb-0 font-bold">{requestsPaid}</h5>
                   </div>
                 </div>
                 <div className="px-3 text-right basis-1/3">
-                  <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                    <i className="ni leading-none ni-world text-lg relative top-3.5 text-white"></i>
+                  <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-700 to-orange-500">
+                    <i className="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
                   </div>
                 </div>
               </div>
@@ -57,16 +51,13 @@ function DashboardRowOne() {
               <div className="flex flex-row -mx-3">
                 <div className="flex-none w-2/3 max-w-full px-3">
                   <div>
-                    <p className="mb-0 font-sans font-semibold leading-normal text-sm">New Clients</p>
-                    <h5 className="mb-0 font-bold">
-                      +3,462
-                      <span className="leading-normal text-red-600 text-sm font-weight-bolder">-2%</span>
-                    </h5>
+                    <p className="mb-0 font-sans font-semibold leading-normal text-sm">Scheduled</p>
+                    <h5 className="mb-0 font-bold">{requestsScheduled}</h5>
                   </div>
                 </div>
                 <div className="px-3 text-right basis-1/3">
-                  <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                    <i className="ni leading-none ni-paper-diploma text-lg relative top-3.5 text-white"></i>
+                  <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-700 to-orange-500">
+                    <i className="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
                   </div>
                 </div>
               </div>
@@ -80,16 +71,13 @@ function DashboardRowOne() {
               <div className="flex flex-row -mx-3">
                 <div className="flex-none w-2/3 max-w-full px-3">
                   <div>
-                    <p className="mb-0 font-sans font-semibold leading-normal text-sm">Sales</p>
-                    <h5 className="mb-0 font-bold">
-                      $103,430
-                      <span className="leading-normal text-sm font-weight-bolder text-lime-500">+5%</span>
-                    </h5>
+                    <p className="mb-0 font-sans font-semibold leading-normal text-sm">Completed</p>
+                    <h5 className="mb-0 font-bold">{requestsCompleted}</h5>
                   </div>
                 </div>
                 <div className="px-3 text-right basis-1/3">
-                  <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                    <i className="ni leading-none ni-cart text-lg relative top-3.5 text-white"></i>
+                  <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-700 to-orange-500">
+                    <i className="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
                   </div>
                 </div>
               </div>
