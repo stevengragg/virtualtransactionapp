@@ -3,10 +3,13 @@ import { useTracker } from "meteor/react-meteor-data";
 import moment from "moment";
 import React from "react";
 import { useParams } from "react-router-dom";
+import { ImCloudDownload } from "@react-icons/all-files/im/ImCloudDownload";
 
 import useTitle from "../hooks/useTitle";
 import { classNames, extractColorOfStatus } from "../utils/helper";
 import { Requests } from "/imports/both/collections/Requests";
+import { WAITING_FOR_PAYMENT } from "/imports/both/constants";
+import RequestDropZoneForProofOfPayment from "../components/requests/RequestDropZoneForProofOfPayment";
 
 function ManageRequestPage() {
   useTitle("Manage Request - Virtual Transaction Assistance | UCC Congress");
@@ -45,6 +48,12 @@ function ManageRequestPage() {
   return (
     <div className="w-full px-6 pt-6 mx-auto pb-24 ">
       <div className="relative flex flex-col h-full min-w-0 break-words bg-white border shadow-soft-xl rounded-2xl bg-clip-border border-slate-500 mb-8 pb-8">
+        <div className="flex flex-wrap">
+          <div className="flex-1 p-4">{request?.isApproved ? "✅" : "❌"} Request Approved ▶</div>
+          <div className="flex-1 p-4">{request?.isPaid ? "✅" : "❌"} OR Paid/Request Paid ▶</div>
+          <div className="flex-1 p-4">{request?.isScheduled ? "✅" : "❌"} Request Scheduled ▶</div>
+          <div className="flex-1 p-4">{request?.isCompleted ? "✅" : "❌"} Request Completed ▶</div>
+        </div>
         <div className="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
           <div className="flex flex-wrap -mx-3">
             <div className="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
@@ -70,6 +79,27 @@ function ManageRequestPage() {
             </li>
           </ul>
         </div>
+        {request?.status === WAITING_FOR_PAYMENT ? (
+          <div className="flex-auto p-4">
+            <a href={request?.attachedOrderOfPayment} target="_blank" rel="noreferrer" className="font-extrabold text-lg italic text-blue-400 cursor-pointer">
+              <ImCloudDownload /> Download the Order of Payment
+            </a>
+          </div>
+        ) : null}
+        {request?.status === WAITING_FOR_PAYMENT && !request?.proofOfPayment ? (
+          <div className="flex-auto p-4">
+            <label className="text-lg font-semibold text-slate-700"> Upload your proof of payment</label>
+            <RequestDropZoneForProofOfPayment requestId={id} />
+          </div>
+        ) : (
+          <div className="flex-auto p-4">
+            <label className="text-lg font-semibold text-slate-700"> You already uploaded your proof of payment. Your request is now being evaluated</label>
+            <div className="mt-2">
+              <img src={request?.proofOfPayment} className="w-32 h-32 object-cover" />
+            </div>
+          </div>
+        )}
+
         <div className="p-8 flex flex-col gap-4">
           {request?.requests?.map((item, idx) => (
             <div key={idx} className="w-full lg:basis-2/6 border border-slate-600 rounded-xl shadow-soft-md p-4">

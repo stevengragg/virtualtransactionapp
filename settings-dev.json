@@ -5,7 +5,8 @@
             "process": "main",
             "production": false,
             "staging": true
-        }
+        },
+        "REACT_APP_API_HOSTNAME": "http://localhost:8080"
     },
     "MAIL_URL": "*****",
     "MONGO_URL": "*****",

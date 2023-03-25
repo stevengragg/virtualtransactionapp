@@ -60,6 +60,21 @@ Meteor.methods({
       throw new Meteor.Error(err?.error, err?.reason);
     }
   },
+  async "request.getUploadUrl"({ requestId, fileId, fileName }) {
+    try {
+      const user = Meteor.user();
+      const userId = user?._id;
+      log("request.create: getUploadUrl", { requestId, fileId, fileName });
+
+      if (!userId) throw new Meteor.Error("not-authorized", "You are not authorized to perform this action");
+      return true;
+    } catch (err) {
+      error("request.getUploadUrl: internal server error", {
+        err,
+      });
+      throw new Meteor.Error(err?.error, err?.reason);
+    }
+  },
   "request.update": update,
   "request.remove": remove,
   "request.find": findById,
