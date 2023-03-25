@@ -17,9 +17,10 @@ const extractColorFromBtnType = (btnType) => {
   }
 };
 
-function RequestFormButton({ type, onClick, disabled, btnTitle, btnType }) {
+function RequestFormButton({ type, onClick, disabled, btnTitle, btnType, form }) {
   return (
     <button
+      form={form}
       disabled={disabled}
       type={type}
       onClick={onClick}

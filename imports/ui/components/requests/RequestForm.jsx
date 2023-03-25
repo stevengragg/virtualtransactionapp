@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MAX_ALLOWED_REQUEST_AT_A_TIME } from "../../utils/constants";
 import { FormSelectMenu } from "../shared/form/FormSelectMenu";
+import RequestFormButton from "../shared/form/RequestFormButton";
 import { ALLOWED_STUDENT_REQUESTS } from "/imports/both/constants";
 
 function RequestForm() {
@@ -45,7 +46,7 @@ function RequestForm() {
     <>
       <form onSubmit={handleSubmitForms} className="flex flex-col lg:flex-row gap-1 items-start" id="8beebcf2-3f03-4ecb-8d9c-7115b39dce92">
         {forms.map((form, index) => (
-          <div key={index} className="basis-2/6">
+          <div key={index} className="w-full lg:basis-2/6 border border-slate-600 rounded-xl shadow-soft-md p-4">
             <div className="px-1">
               <p className="text-semibold text-sm text-slate-500 leading-1">Request {index + 1}</p>
             </div>
@@ -85,24 +86,20 @@ function RequestForm() {
                 />
               </div>
             </div>
-
-            {index > 0 && (
-              <button type="button" onClick={() => handleCancelForm(index)}>
-                Cancel
-              </button>
-            )}
+            <RequestFormButton type="button" btnTitle={loading ? "..." : "Cancel"} disabled={loading} btnType="cancel" onClick={() => handleCancelForm(index)} />
           </div>
         ))}
-        <br />
-        {forms?.length !== MAX_ALLOWED_REQUEST_AT_A_TIME && (
-          <button type="button" onClick={handleAddForm}>
-            Add Form
-          </button>
-        )}
+        <div className="w-48">
+          {forms?.length !== MAX_ALLOWED_REQUEST_AT_A_TIME && (
+            <RequestFormButton type="button" btnTitle={loading ? "..." : "New Request"} disabled={loading} btnType="success" onClick={handleAddForm} />
+          )}
+        </div>
       </form>
-      <button form="8beebcf2-3f03-4ecb-8d9c-7115b39dce92" type="submit">
-        Submit
-      </button>
+      <div className="w-48 mb-8">
+        {forms?.length ? (
+          <RequestFormButton form="8beebcf2-3f03-4ecb-8d9c-7115b39dce92" type="submit" btnTitle={loading ? "Processing..." : "Submit Request(s)"} disabled={loading} btnType="submit" />
+        ) : null}
+      </div>
     </>
   );
 }
