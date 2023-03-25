@@ -1,22 +1,25 @@
 import React from "react";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { extractPageTitle } from "../../utils/helper";
 import PrivateNavigation from "./PrivateNavigation";
 import PrivateSideBar from "./PrivateSideBar";
 
 function PrivateLayout() {
+  const { pathname } = useLocation();
+  const [sideBarOpen, setSideBarOpen] = React.useState(true);
   const auth = useAuth();
   if (!auth?.user?.emails[0].verified) return <Navigate to="/verify-account" />;
 
   return (
     <div className="h-screen bg-blue-50">
       {/* Sidebar */}
-      <PrivateSideBar />
+      <PrivateSideBar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
       {/* Content area */}
 
       <main className="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
         {/* Navigation Header */}
-        <PrivateNavigation />
+        <PrivateNavigation user={auth?.user} title={extractPageTitle(pathname)} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
         <Outlet />
       </main>
     </div>

@@ -91,3 +91,18 @@ export const yearsBack = (back) => {
   const year = new Date().getFullYear();
   return Array.from({ length: back }, (v, i) => year - back + i + 1);
 };
+
+export const extractPageTitle = (path) => {
+  switch (path) {
+    case "/dashboard":
+      return "Dashboard";
+    case "/requests":
+      return "Requests";
+    case "/requests/new":
+      return "New Request";
+    case "/settings":
+      return "Settings";
+    default:
+      return "Page";
+  }
+};
