@@ -2,9 +2,11 @@
 
 This is a Virtual Transaction App for allowing students to request documents to the school and provide requirements in return. School admins can validate those requests.
 
+Checkout the app here: 
+
 ## Installation
 
-Clone the repository:
+Clone the repository: https://www.uccvta.app
 
 ```bash
 git clone https://github.com/katherinegragg/virtualtransactionapp.git
